@@ -1,13 +1,13 @@
 #include "board.hpp"
 
 
-auto Board::getFEN() -> std::string {
-    return m_currentFEN;
+auto Board::get_fen() -> std::string {
+    return m_current_fen;
 }
 
-auto Board::setFEN(std::string& fen_string) -> bool {
-    if (checkFENIsValid(fen_string)){
-        m_currentFEN = fen_string;
+auto Board::set_fen(std::string& fen_string) -> bool {
+    if (check_fen_is_valid(fen_string)){
+        m_current_fen = fen_string;
         return true;
     }
     else{
@@ -16,62 +16,70 @@ auto Board::setFEN(std::string& fen_string) -> bool {
     }
 }
 
-auto Board::checkFENIsValid(std::string fen) -> bool {
+auto Board::check_fen_is_valid(std::string fen) -> bool {
     // check the formatting is correct
 
     return true;
 }
 
-auto Board::printFEN() -> void {
-    std::cout << getFEN();
+auto Board::print_fen() -> void {
+    std::cout << get_fen();
 }
 
-auto Board::printPosition() -> void {
-    auto fen = getFEN();
+auto Board::print_position() -> void {
+    auto fen = get_fen();
     std::vector<char> pieces = {'p','r','n','b','q','k','P','R','N','B','Q','K'};
-    std::string asciPosition{};
+    std::string asci_position{};
     for (auto& i: fen){
         if (std::find(pieces.begin(), pieces.end(), i)  != std::end(pieces)){
-            asciPosition += i;
+            asci_position += i;
         }
         else if (isdigit(i)){
-            asciPosition += std::string(i-'0', '.');
+            asci_position += std::string(i-'0', '.');
         }
         else if (i == '/'){
-            asciPosition += '\n';
+            asci_position += '\n';
         }
         else if (i == ' ')
         {
-            std::cout << asciPosition << '\n';
+            std::cout << asci_position << '\n';
             return;
         }
     }
 }
 
-auto Board::isLegalMove(std::string& notation) -> bool {
+auto Board::is_legal_move(std::string& notation) -> bool {
     return true;
 }
 
 auto Board::move(std::string notation) -> bool {
 
-    if (isLegalMove(notation)){
-
+    if (is_legal_move(notation)){
+        parse_move(notation);
         return true;
     }
     return false;
 }
 
-auto Board::parseMove(std::string move) -> std::pair<Square, Square> {
-    char piece = move[0];
-    Square src;
-
+auto Board::parse_move(std::string move) -> void {
+    //Square src;
+    Square dst;
     int pad{};
     if (move[-1] == '+' || move[-1] == '#'){
         pad++;
     }
-    Square dst;
     dst.file = move[-2-pad];
     dst.rank = move[-1-pad];
 
-    return {src, dst};
+    char piece = move[0];
+    if (piece >= 'a'){  // pawn move denoted by lower case letter eg. dxe5
+        for (auto i:m_pieces){
+            if (i.get_type() == 'P' && i.get_colour() == m_turn){
+                i.move(dst);
+            }
+        }
+    }
+    else{  // piece move denoted by uppercase letter R,N,B,Q,K
+
+    }
 }

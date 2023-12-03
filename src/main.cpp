@@ -8,9 +8,9 @@ auto main(int argc, char** argv) -> int {
     Player player2{"Black", 1600.0, 'b'};
 
     Board board;
-    board.printPosition();
+    board.print_position();
 
     board.move("d4");
 
-    board.printPosition();
+    board.print_position();
 }

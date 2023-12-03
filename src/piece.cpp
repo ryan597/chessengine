@@ -1,20 +1,23 @@
 #include "piece.hpp"
 
-
-auto Piece::move(Square dest) -> void {
-    if (isLegalMove(dest)){
-        if (isCapture(dest)){
-            // Remove piece from board
-        }
-        if (isCheck(dest))
-        {
-            // Update that opposing king is in check
-        }
-    }
+Piece::Piece(char type, char colour, Square position) : m_type(type), m_colour(colour), m_position(position) {
+    m_legal_moves = generate_legal_moves();
 }
 
-auto Piece::isLegalMove(std::string move) -> bool {}
-auto Piece::isLegalMove(Square dest) -> bool {}
-auto Piece::isCapture(Square dest) -> bool {}
-auto Piece::isCheck(Square dest) -> bool {}
-auto Piece::generateLegalMoves() -> std::vector<std::string> {}
+auto Piece::get_type() -> char {
+    return m_type;
+}
+
+auto Piece::get_colour() -> char {
+    return m_colour;
+}
+
+auto Piece::promote_pawn(char type) -> void {}
+
+auto Piece::move(Square dest) -> void {
+        m_position = dest;
+}
+
+auto Piece::generate_legal_moves() -> std::vector<std::string> {
+    return {" "};
+}
