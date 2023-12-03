@@ -6,4 +6,4 @@ project(ChessNGin
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(NGin.out main.cpp piece.cpp)
+add_executable(NGin main.cpp piece.cpp)
