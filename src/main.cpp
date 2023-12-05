@@ -9,14 +9,10 @@ auto main(int argc, char** argv) -> int {
 
     Board board{};
 
-    Pawn* apawn = new Pawn('w', Square{'a', '2'});
-    std::cout << apawn->get_file();
-    delete apawn;
-
-    board.print_fen();
     board.print();
 
     board.move("d4");
+    board.move("d5");
 
     board.print();
 }

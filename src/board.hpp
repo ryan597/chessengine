@@ -24,7 +24,7 @@ public:
     auto print() -> void;
     auto print_fen() -> void;
     auto print_position() -> void;
-    auto is_legal_move(std::string& notation) -> bool;
+    auto is_legal_move(std::string notation) -> bool;
     auto move(std::string notation) -> bool;
     auto parse_move(std::string move) -> void;
 };
