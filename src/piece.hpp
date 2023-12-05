@@ -1,3 +1,6 @@
+#ifndef H_PIECE
+#define H_PIECE
+
 #include <string>
 #include <vector>
 
@@ -8,7 +11,7 @@ struct Square {
 
 class Piece {
 private:
-    char m_type;  // type isnt const for pawns
+    char m_type;
     const char m_colour;
     Square m_position;
     std::vector<std::string> m_legal_moves;
@@ -16,7 +19,47 @@ public:
     Piece(char type, char colour, Square position);
     auto get_type() -> char;
     auto get_colour() -> char;
-    auto promote_pawn(char type) -> void;
     auto move(Square dest) -> void;
+};
+
+
+class Pawn: public Piece {
+public:
+    Pawn(char colour, Square position);
+    auto promote_pawn(char type) -> void;
     auto generate_legal_moves() -> std::vector<std::string>;
 };
+
+
+class Rook: public Piece {
+public:
+    Rook(char colour, Square position);
+    auto generate_legal_moves() -> std::vector<std::string>;
+};
+
+class Knight: public Piece {
+public:
+    Knight(char colour, Square position);
+    auto generate_legal_moves() -> std::vector<std::string>;
+};
+
+class Bishop: public Piece {
+public:
+    Bishop(char colour, Square position);
+    auto generate_legal_moves() -> std::vector<std::string>;
+};
+
+class Queen: public Piece {
+public:
+    Queen(char colour, Square position);
+    auto generate_legal_moves() -> std::vector<std::string>;
+};
+
+class King: public Piece {
+public:
+    King(char colour, Square position);
+    auto generate_legal_moves() -> std::vector<std::string>;
+};
+
+
+#endif
