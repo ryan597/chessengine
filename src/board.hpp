@@ -4,6 +4,7 @@
 #include <iostream>
 #include <algorithm>
 #include <memory>
+#include <array>
 #include "piece.hpp"
 
 
@@ -20,6 +21,7 @@ public:
     auto get_fen() -> std::string;
     auto set_fen(std::string& fen_string) -> bool;
     auto check_fen_is_valid(std::string fen) -> bool;
+    auto print() -> void;
     auto print_fen() -> void;
     auto print_position() -> void;
     auto is_legal_move(std::string& notation) -> bool;

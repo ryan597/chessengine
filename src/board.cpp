@@ -6,8 +6,7 @@ Board::Board(){
     m_current_fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
     const std::vector<std::pair<char, char>> starting_square{{'R', 'a'}, {'N', 'b'}, {'B', 'c'}, {'Q', 'd'}, {'K', 'e'}, {'B', 'f'}, {'N', 'g'}, {'R', 'h'}};
-    m_pieces.reserve(20);
-    m_pieces.emplace_back(std::make_shared<Pawn>('w', Square{'a', '2'}));
+    m_pieces.resize(32);
 
     for (auto i: starting_square){ {
         m_pieces.emplace_back(std::make_shared<Pawn>('w', Square{i.second, '2'}));
@@ -32,8 +31,7 @@ Board::Board(int variant){
         // otherwise, randomise the backrank
 
         const std::vector<std::pair<char, char>> starting_square{{'R', 'a'}, {'N', 'b'}, {'B', 'c'}, {'Q', 'd'}, {'K', 'e'}, {'B', 'f'}, {'N', 'g'}, {'R', 'h'}};
-        m_pieces.reserve(20);
-        m_pieces.emplace_back(std::make_shared<Pawn>('w', Square{'a', '2'}));
+        m_pieces.resize(32);
 
         for (auto i: starting_square){ {
             m_pieces.emplace_back(std::make_shared<Pawn>('w', Square{i.second, '2'}));
@@ -46,6 +44,7 @@ Board::Board(int variant){
 }
 
 auto Board::get_fen() -> std::string {
+    // needs to generate the fen from pieces
     return m_current_fen;
 }
 
@@ -71,6 +70,7 @@ auto Board::print_fen() -> void {
 }
 
 auto Board::print_position() -> void {
+    // printing from the FEN - Likely to scrap
     auto fen = get_fen();
     std::vector<char> pieces = {'p','r','n','b','q','k','P','R','N','B','Q','K'};
     std::string asci_position{};
@@ -89,6 +89,22 @@ auto Board::print_position() -> void {
             std::cout << asci_position << '\n';
             return;
         }
+    }
+}
+
+auto Board::print() -> void {
+    std::array<char, 64> board_position{{'-'}};
+
+    for (auto piece: m_pieces){
+        auto file = piece->get_file();
+        auto rank = piece->get_rank();
+        // when printing we start at the top left of the board (a8), so rank=7 (0 index for the array)
+        // and file=0 (0 indexed for the array)
+        board_position[64 - rank*8 + file-8] = piece->get_type();
+    }
+
+    for (int i=0; i<64; i++){
+        std::cout << board_position[i];
     }
 }
 
@@ -118,8 +134,8 @@ auto Board::parse_move(std::string move) -> void {
     char piece = move[0];
     if (piece >= 'a'){  // pawn move denoted by lower case letter eg. dxe5
         for (auto i:m_pieces){
-            if (i.get_type() == 'P' && i.get_colour() == m_turn){
-                i.move(dst);
+            if (i->get_type() == 'P' && i->get_colour() == m_turn){
+                i->move(dst);
             }
         }
     }
