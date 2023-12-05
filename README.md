@@ -7,7 +7,7 @@ C++ chess engine
 Use the included `CMakeLists.txt` file.
 
 ```bash
-git clone
+git clone https://github.com/ryan597/chessengine.git
 cd chessengine && mkdir build
 cmake -S src -B build
 cd build && make
