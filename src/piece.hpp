@@ -22,6 +22,7 @@ public:
     auto get_file() -> int;
     auto get_rank() -> int;
     auto move(Square dest) -> void;
+    auto virtual generate_legal_moves() -> std::vector<std::string> = 0;
 };
 
 
@@ -29,38 +30,38 @@ class Pawn: public Piece {
 public:
     Pawn(char colour, Square position);
     auto promote_pawn(char type) -> void;
-    auto generate_legal_moves() -> std::vector<std::string>;
+    auto generate_legal_moves() -> std::vector<std::string> override;
 };
 
 
 class Rook: public Piece {
 public:
     Rook(char colour, Square position);
-    auto generate_legal_moves() -> std::vector<std::string>;
+    auto generate_legal_moves() -> std::vector<std::string> override;
 };
 
 class Knight: public Piece {
 public:
     Knight(char colour, Square position);
-    auto generate_legal_moves() -> std::vector<std::string>;
+    auto generate_legal_moves() -> std::vector<std::string> override;
 };
 
 class Bishop: public Piece {
 public:
     Bishop(char colour, Square position);
-    auto generate_legal_moves() -> std::vector<std::string>;
+    auto generate_legal_moves() -> std::vector<std::string> override;
 };
 
 class Queen: public Piece {
 public:
     Queen(char colour, Square position);
-    auto generate_legal_moves() -> std::vector<std::string>;
+    auto generate_legal_moves() -> std::vector<std::string> override;
 };
 
 class King: public Piece {
 public:
     King(char colour, Square position);
-    auto generate_legal_moves() -> std::vector<std::string>;
+    auto generate_legal_moves() -> std::vector<std::string> override;
 };
 
 
