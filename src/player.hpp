@@ -1,3 +1,6 @@
+#ifndef H_PLAYER
+#define H_PLAYER
+
 #include <string>
 
 class Player {
@@ -15,3 +18,5 @@ public:
     auto get_colour() -> char;
     auto set_colour(char colour) -> void;
 };
+
+#endif
