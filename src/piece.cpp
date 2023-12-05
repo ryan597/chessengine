@@ -16,7 +16,13 @@ auto Piece::move(Square dest) -> void {
         m_position = dest;
 }
 
+auto Piece::get_file() -> int {
+    return int(m_position.file - 'a');
+}
 
+auto Piece::get_rank() -> int {
+    return int(m_position.rank - '1');
+}
 
 Pawn::Pawn(char colour, Square position): Piece('P', colour, position){}
 auto Pawn::promote_pawn(char type) -> void {

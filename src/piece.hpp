@@ -5,8 +5,8 @@
 #include <vector>
 
 struct Square {
-    char file;  // a b c d e f g h
-    char rank;  // 1 2 3 4 5 6 7 8
+    char file{};  // a b c d e f g h
+    char rank{};  // 1 2 3 4 5 6 7 8
 };
 
 class Piece {
@@ -19,6 +19,8 @@ public:
     Piece(char type, char colour, Square position);
     auto get_type() -> char;
     auto get_colour() -> char;
+    auto get_file() -> int;
+    auto get_rank() -> int;
     auto move(Square dest) -> void;
 };
 
