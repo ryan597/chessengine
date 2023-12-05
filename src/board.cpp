@@ -1,5 +1,49 @@
 #include "board.hpp"
 
+Board::Board(){
+    m_turn = 'w';
+    // FEN - position, turn, castling rights, halfmove counter (for 50 move rule), fullmove counter
+    m_current_fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+
+    const std::vector<std::pair<char, char>> starting_square{{'R', 'a'}, {'N', 'b'}, {'B', 'c'}, {'Q', 'd'}, {'K', 'e'}, {'B', 'f'}, {'N', 'g'}, {'R', 'h'}};
+    m_pieces.reserve(20);
+    m_pieces.emplace_back(std::make_shared<Pawn>('w', Square{'a', '2'}));
+
+    for (auto i: starting_square){ {
+        m_pieces.emplace_back(std::make_shared<Pawn>('w', Square{i.second, '2'}));
+        m_pieces.emplace_back(std::make_shared<Pawn>('w', Square{i.second, '1'}));
+        m_pieces.emplace_back(std::make_shared<Pawn>('b', Square{i.second, '7'}));
+        m_pieces.emplace_back(std::make_shared<Pawn>('b', Square{i.second, '8'}));
+        }
+    }
+}
+
+Board::Board(int variant){
+    m_turn = 'w';
+
+    switch (variant){
+    case 0:
+        Board();
+        break;
+    case 960:
+        // Fischer random - Chess960
+        // Black will mirror White's randomised pieces
+        // King must be between the two rooks so that castling both sides is valid
+        // otherwise, randomise the backrank
+
+        const std::vector<std::pair<char, char>> starting_square{{'R', 'a'}, {'N', 'b'}, {'B', 'c'}, {'Q', 'd'}, {'K', 'e'}, {'B', 'f'}, {'N', 'g'}, {'R', 'h'}};
+        m_pieces.reserve(20);
+        m_pieces.emplace_back(std::make_shared<Pawn>('w', Square{'a', '2'}));
+
+        for (auto i: starting_square){ {
+            m_pieces.emplace_back(std::make_shared<Pawn>('w', Square{i.second, '2'}));
+            m_pieces.emplace_back(std::make_shared<Pawn>('w', Square{i.second, '1'}));
+            m_pieces.emplace_back(std::make_shared<Pawn>('b', Square{i.second, '7'}));
+            m_pieces.emplace_back(std::make_shared<Pawn>('b', Square{i.second, '8'}));
+            }
+        }
+    }
+}
 
 auto Board::get_fen() -> std::string {
     return m_current_fen;
