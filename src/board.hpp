@@ -12,7 +12,7 @@ class Board {
 private:
     std::string m_current_fen;
     // Vector of pieces on board
-    std::vector<std::shared_ptr<Piece>> m_pieces;
+    std::vector<std::unique_ptr<Piece>> m_pieces;
     char m_turn;
 
 public:
