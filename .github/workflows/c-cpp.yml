@@ -23,7 +23,7 @@ jobs:
         path: catch2
     
     - name: "create build files for catch2 and install"
-      working-directory: ${github.workspace}/catch2
+      working-directory: ./catch2
       run: |
         cmake -B build -H. -DBUILD_TESTING=OFF
         sudo cmake --build build/ --target install
@@ -34,5 +34,5 @@ jobs:
         cmake --build build --target all --config Release 
       
     - name: "test"
-      working-directory: ${github.workspace}/build
+      working-directory: ./build
       run: make test
