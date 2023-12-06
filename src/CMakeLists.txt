@@ -1,9 +1,11 @@
-cmake_minimum_required(VERSION 3.18)
+set(SOURCES main.cpp piece.cpp)
+add_library(nginlib SHARED
+        piece.hpp
+        player.hpp
+        board.hpp
+        piece.cpp
+        player.cpp
+        board.cpp
+)
 
-project(ChessNGin
-        VERSION 0.1
-        LANGUAGES CXX)
-
-set(CMAKE_CXX_STANDARD 17)
-
-add_executable(NGin main.cpp piece.cpp)
+add_executable(NGin ${SOURCES})
