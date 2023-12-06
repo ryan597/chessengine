@@ -22,21 +22,17 @@ jobs:
         repository: "catchorg/Catch2"
         path: catch2
     
-    - name: "change into cloned catch2 repo"
-      run: cd catch2
-    - name: "create build files for catch2"
-      run: cmake -B build -H. -DBUILD_TESTING=OFF
-    - name: "install catch2"
-      run: sudo cmake --build build/ --target install
-    - name: "exit catch2 dir"
-      run: cd ..
+    - name: "create build files for catch2 and install"
+      working-directory: ${github.workspace}/catch2
+      run: |
+        cmake -B build -H. -DBUILD_TESTING=OFF
+        sudo cmake --build build/ --target install
   
-    - name: "cmake generate build files"
-      run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
-    - name: "build all"
-      run: cmake --build build --target all --config Release 
+    - name: "cmake generate build files and build"
+      run: |
+        cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+        cmake --build build --target all --config Release 
       
-    - name: "change to build dir"
-      run: cd build
-    - name: "run tests"
+    - name: "test"
+      working-directory: ${github.workspace}/build
       run: make test
