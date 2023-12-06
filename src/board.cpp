@@ -6,7 +6,7 @@ Board::Board(){
     m_current_fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
     const std::vector<std::pair<char, char>> starting_square{{'R', 'a'}, {'N', 'b'}, {'B', 'c'}, {'Q', 'd'}, {'K', 'e'}, {'B', 'f'}, {'N', 'g'}, {'R', 'h'}};
-    m_pieces.resize(32);
+    m_pieces.reserve(32);
 
     for (auto i: starting_square){ {
         m_pieces.emplace_back(std::make_shared<Pawn>('w', Square{i.second, '2'}));
@@ -31,7 +31,7 @@ Board::Board(int variant){
         // otherwise, randomise the backrank
 
         const std::vector<std::pair<char, char>> starting_square{{'R', 'a'}, {'N', 'b'}, {'B', 'c'}, {'Q', 'd'}, {'K', 'e'}, {'B', 'f'}, {'N', 'g'}, {'R', 'h'}};
-        m_pieces.resize(32);
+        m_pieces.reserve(32);
 
         for (auto i: starting_square){ {
             m_pieces.emplace_back(std::make_shared<Pawn>('w', Square{i.second, '2'}));
@@ -93,22 +93,26 @@ auto Board::print_position() -> void {
 }
 
 auto Board::print() -> void {
-    std::array<char, 64> board_position{{'-'}};
+    std::array<char, 64> board_position{};
+    std::fill(board_position.begin(), board_position.end(), '-');
 
     for (auto piece: m_pieces){
         auto file = piece->get_file();
         auto rank = piece->get_rank();
         // when printing we start at the top left of the board (a8), so rank=7 (0 index for the array)
         // and file=0 (0 indexed for the array)
-        board_position[64 - rank*8 + file-8] = piece->get_type();
+        board_position.at(64 - rank*8 + file-8) = piece->get_type();
     }
 
     for (int i=0; i<64; i++){
-        std::cout << board_position[i];
+        std::cout << board_position.at(i);
+        if ((i+1) % 8 == 0){
+            std::cout << '\n';
+        }
     }
 }
 
-auto Board::is_legal_move(std::string& notation) -> bool {
+auto Board::is_legal_move(std::string notation) -> bool {
     return true;
 }
 
@@ -125,17 +129,18 @@ auto Board::parse_move(std::string move) -> void {
     //Square src;
     Square dst;
     int pad{};
-    if (move[-1] == '+' || move[-1] == '#'){
+    if (move.at(move.size()-1) == '+' || move.at(move.size()-1) == '#'){
         pad++;
     }
-    dst.file = move[-2-pad];
-    dst.rank = move[-1-pad];
+    dst.file = move.at(move.size()-2-pad);
+    dst.rank = move.at(move.size()-1-pad);
 
     char piece = move[0];
     if (piece >= 'a'){  // pawn move denoted by lower case letter eg. dxe5
         for (auto i:m_pieces){
             if (i->get_type() == 'P' && i->get_colour() == m_turn){
                 i->move(dst);
+                return;
             }
         }
     }

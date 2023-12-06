@@ -18,7 +18,7 @@ First tasks:
 Using the included `CMakeLists.txt` file.
 
 ```bash
-git clone
+git clone https://github.com/ryan597/chessengine.git
 cd chessengine && mkdir build
 cmake -S src -B build -DCMAKE_BUILD_TYPE=Release
 cd build && make
