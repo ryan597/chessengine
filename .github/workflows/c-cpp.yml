@@ -1,0 +1,23 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: "setup build dir"
+      run: mkdir build && cd build
+    - name: "cmake generate build files"
+      run: cmake .. -DCMAKE_BUILD_TYPE=Release
+    - name: "build all"
+      run: make
+    - name: run tests
+      run: "make test"
