@@ -20,8 +20,8 @@ Using the included `CMakeLists.txt` file.
 ```bash
 git clone https://github.com/ryan597/chessengine.git
 cd chessengine
-mkdir build && cd build
-cmake .. && make
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build
 ```
 
 ## Testing
@@ -45,7 +45,7 @@ Tests can be run after building
 
 ```bash
 cd chessengine
-mkdir build && cd build
-cmake .. && make
-make test
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
+cmake --build build
+cd build && make test
 ```
