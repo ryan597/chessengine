@@ -19,9 +19,9 @@ Using the included `CMakeLists.txt` file.
 
 ```bash
 git clone https://github.com/ryan597/chessengine.git
-cd chessengine && mkdir build
-cmake -S src -B build -DCMAKE_BUILD_TYPE=Release
-cd build && make
+cd chessengine
+mkdir build && cd build
+cmake .. && make
 ```
 
 ## Testing
@@ -44,7 +44,8 @@ sudo cmake --build build/ --target install
 Tests can be run after building
 
 ```bash
-cmake -S src -B build -DCMAKE_BUILD_TYPE=Debug
-cd build && make
+cd chessengine
+mkdir build && cd build
+cmake .. && make
 make test
 ```
