@@ -27,6 +27,7 @@ public:
     auto is_legal_move(std::string notation) -> bool;
     auto move(std::string notation) -> bool;
     auto parse_move(std::string move) -> void;
+    auto get_pieces() -> std::vector<std::shared_ptr<Piece>>;
 };
 
 

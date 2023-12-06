@@ -148,3 +148,7 @@ auto Board::parse_move(std::string move) -> void {
 
     }
 }
+
+auto Board::get_pieces() -> std::vector<std::shared_ptr<Piece>> {
+    return m_pieces;
+}
