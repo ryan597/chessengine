@@ -30,7 +30,7 @@
 
 TEST_CASE("Board constructor", "[board]"){
     Board chessboard{};
-    auto piece_vector = chessboard.get_pieces();
+    auto& piece_vector = chessboard.get_pieces();
     REQUIRE(piece_vector.size() == 32);
 }
 
@@ -42,7 +42,7 @@ TEST_CASE("Board print", "[board]"){
 
     chessboard.print();
     std::string expected_output{"PPPPPPPP\nPPPPPPPP\n--------\n--------\n--------\n--------\nPPPPPPPP\nPPPPPPPP\n"};
-    REQUIRE(expected_output.compare(ss.str()));
+    REQUIRE(expected_output.compare(ss.str()) == 0);
 
     std::cout.rdbuf(old_buf); //reset
 }
