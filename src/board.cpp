@@ -9,10 +9,10 @@ Board::Board(){
     m_pieces.reserve(32);
 
     for (auto i: starting_square){ {
-        m_pieces.emplace_back(std::make_shared<Pawn>('w', Square{i.second, '2'}));
-        m_pieces.emplace_back(std::make_shared<Pawn>('w', Square{i.second, '1'}));
-        m_pieces.emplace_back(std::make_shared<Pawn>('b', Square{i.second, '7'}));
-        m_pieces.emplace_back(std::make_shared<Pawn>('b', Square{i.second, '8'}));
+        m_pieces.emplace_back(std::make_unique<Pawn>('w', Square{i.second, '2'}));
+        m_pieces.emplace_back(std::make_unique<Pawn>('w', Square{i.second, '1'}));
+        m_pieces.emplace_back(std::make_unique<Pawn>('b', Square{i.second, '7'}));
+        m_pieces.emplace_back(std::make_unique<Pawn>('b', Square{i.second, '8'}));
         }
     }
 }
@@ -34,10 +34,10 @@ Board::Board(int variant){
         m_pieces.reserve(32);
 
         for (auto i: starting_square){ {
-            m_pieces.emplace_back(std::make_shared<Pawn>('w', Square{i.second, '2'}));
-            m_pieces.emplace_back(std::make_shared<Pawn>('w', Square{i.second, '1'}));
-            m_pieces.emplace_back(std::make_shared<Pawn>('b', Square{i.second, '7'}));
-            m_pieces.emplace_back(std::make_shared<Pawn>('b', Square{i.second, '8'}));
+            m_pieces.emplace_back(std::make_unique<Pawn>('w', Square{i.second, '2'}));
+            m_pieces.emplace_back(std::make_unique<Pawn>('w', Square{i.second, '1'}));
+            m_pieces.emplace_back(std::make_unique<Pawn>('b', Square{i.second, '7'}));
+            m_pieces.emplace_back(std::make_unique<Pawn>('b', Square{i.second, '8'}));
             }
         }
     }
@@ -96,7 +96,7 @@ auto Board::print() -> void {
     std::array<char, 64> board_position{};
     std::fill(board_position.begin(), board_position.end(), '-');
 
-    for (auto piece: m_pieces){
+    for (auto &piece: m_pieces){
         auto file = piece->get_file();
         auto rank = piece->get_rank();
         // when printing we start at the top left of the board (a8), so rank=7 (0 index for the array)
@@ -137,7 +137,7 @@ auto Board::parse_move(std::string move) -> void {
 
     char piece = move[0];
     if (piece >= 'a'){  // pawn move denoted by lower case letter eg. dxe5
-        for (auto i:m_pieces){
+        for (auto &i:m_pieces){
             if (i->get_type() == 'P' && i->get_colour() == m_turn){
                 i->move(dst);
                 return;
