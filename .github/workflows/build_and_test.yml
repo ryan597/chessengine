@@ -16,7 +16,7 @@ jobs:
       uses: actions/checkout@v3
 
     - name: "build"
-      uses: ./.github/actions
+      uses: ./.github/actions@main
 
     - name: "test"
       working-directory: ./build
