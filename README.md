@@ -1,5 +1,7 @@
 # chessengine
 
+[![cpp-linter](https://github.com/cpp-linter/cpp-linter-action/actions/workflows/cpp-linter.yml/badge.svg)](https://github.com/cpp-linter/cpp-linter-action/actions/workflows/cpp-linter.yml)
+
 C++ chess engine
 
 Beginning of a project to build my own chess engine along with GUI for playing against the engine.
