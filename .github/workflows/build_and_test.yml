@@ -1,0 +1,32 @@
+name: C++ build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: "build"
+      uses: ./.github/actions
+
+    - name: "test"
+      working-directory: ./build
+      run: make test
+
+    - name: "code coverage"
+      working-directory: ./build
+      run: make coverage
+
+    - name: "comment coverage"
+      working-directory: ./build
+      uses: romeovs/lcov-reporter-action@v0.2.16
+      with:
+        lcov-file: ./coverage.info
+      if: github.event_name == 'pull_request'
