@@ -1,6 +1,6 @@
 # ChessEngine
 
-[![C++ build](https://github.com/ryan597/chessengine/actions/workflows/c-cpp.yml/badge.svg)](https://github.com/ryan597/chessengine/actions/workflows/c-cpp.yml)
+[![C++ build](https://github.com/ryan597/chessengine/actions/workflows/build_and_test.yml/badge.svg)](https://github.com/ryan597/chessengine/actions/workflows/build_and_test.yml)
 [![cpp-linter](https://github.com/ryan597/chessengine/actions/workflows/cpp-linter.yml/badge.svg)](https://github.com/ryan597/chessengine/actions/workflows/cpp-linter.yml)
 
 C++ chess engine
