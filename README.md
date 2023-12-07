@@ -52,3 +52,11 @@ cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
 cmake --build build
 cd build && make test
 ```
+
+To generate the `CodeCoverage` report you need to have installed `lcov` and `gcovr`, then you can make the target
+
+```bash
+make coverage
+```
+
+The coverage report is viewable by opening the file `./build/coverage/index.html` in a web browser
