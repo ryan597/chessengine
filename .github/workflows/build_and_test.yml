@@ -9,7 +9,6 @@ on:
 jobs:
 
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -25,8 +24,7 @@ jobs:
       run: make coverage
 
     - name: "comment coverage"
-      working-directory: ./build
       uses: romeovs/lcov-reporter-action@v0.2.16
       with:
-        lcov-file: ./coverage.info
-      if: github.event_name == 'pull_request'
+        lcov-file: ./build/coverage.info
+      if: ${{ github.event_name == 'pull_request' }}

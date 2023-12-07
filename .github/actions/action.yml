@@ -3,22 +3,22 @@ description: build source files
 runs:
   using: "composite"
   steps:
-  - name: "checkout repo"
-        uses: actions/checkout@v3
+    - name: "checkout repo"
+      uses: actions/checkout@v3
 
-      - name: "checkout catch2"
-        uses: actions/checkout@v4
-        with:
-          repository: "catchorg/Catch2"
-          path: catch2
+    - name: "checkout catch2"
+      uses: actions/checkout@v4
+      with:
+        repository: "catchorg/Catch2"
+        path: catch2
 
-      - name: "create build files for catch2 and install"
-        working-directory: ./catch2
-        run: |
-          cmake -B build -H. -DBUILD_TESTING=OFF
-          sudo cmake --build build/ --target install
+    - name: "create build files for catch2 and install"
+      working-directory: ./catch2
+      run: |
+        cmake -B build -H. -DBUILD_TESTING=OFF
+        sudo cmake --build build/ --target install
 
-      - name: "cmake generate build files and build"
-        run: |
-          cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
-          cmake --build build
+    - name: "cmake generate build files and build"
+      run: |
+        cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
+        cmake --build build
