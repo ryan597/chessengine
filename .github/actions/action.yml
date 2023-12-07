@@ -16,6 +16,10 @@ runs:
         sudo cmake --build build/ --target install
       shell: bash
 
+    - name: "install lcov for coverage"
+      run: sudo apt install lcov
+      shell: bash
+
     - name: "cmake generate build files and build"
       run: |
         cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
