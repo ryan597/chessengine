@@ -1,6 +1,6 @@
 # chessengine
 
-[![cpp-linter](https://github.com/cpp-linter/cpp-linter-action/actions/workflows/cpp-linter.yml/badge.svg)](https://github.com/ryan597/chesse gine/actions/workflows/cpp-linter.yml)
+[![cpp-linter](https://github.com/cpp-linter/cpp-linter-action/actions/workflows/cpp-linter.yml/badge.svg)](https://github.com/ryan597/chesse gine/.github/workflows/cpp-linter.yml)
 
 C++ chess engine
 
