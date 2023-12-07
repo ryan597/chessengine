@@ -2,11 +2,18 @@ cmake_minimum_required(VERSION 3.18)
 
 project(ChessNGin
         VERSION 0.1
-        LANGUAGES CXX)
+        LANGUAGES C CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_subdirectory(src)
+if(CMAKE_BUILD_TYPE MATCHES Debug)
+    enable_testing()
+    list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
-enable_testing()
-add_subdirectory(tests)
+    include(CodeCoverage)
+    append_coverage_compiler_flags()
+
+    add_subdirectory(tests)
+endif()
+
+add_subdirectory(src)
