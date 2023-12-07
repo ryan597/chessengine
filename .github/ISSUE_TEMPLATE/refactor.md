@@ -7,8 +7,8 @@ assignees: ''
 
 ---
 
-**Describe any issues with existing source code**
+### Describe any issues with existing source code
 
-**Describe the proposed changes**
+### Describe the proposed changes
 
-**Are any additional tests required?**
+### Are any additional tests required?
