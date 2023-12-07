@@ -12,6 +12,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: "checkout repo"
+      uses: actions/checkout@v3
+
     - name: "build"
       uses: ./.github/actions
 
