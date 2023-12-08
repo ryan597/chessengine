@@ -113,6 +113,14 @@ auto Board::print() -> void {
 }
 
 auto Board::is_legal_move(std::string notation) -> bool {
+    std::vector<std::string> legal_moves;
+    for (auto& piece: m_pieces){
+        legal_moves.emplace_back(piece->generate_legal_moves(this));
+    }
+    // TODO: check if two pieces can move to the same square
+    // eg. R on d1 and R on d8 can both move to d5, so the moves must be
+    // denoted as R1d5 and R8d5 respectively
+
     return true;
 }
 
