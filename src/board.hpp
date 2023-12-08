@@ -5,8 +5,10 @@
 #include <algorithm>
 #include <memory>
 #include <array>
+
 #include "piece.hpp"
 
+class Piece;
 
 class Board {
 private:
