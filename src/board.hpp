@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <algorithm>
+#include <random>
 #include <memory>
 
 #include "piece.hpp"
@@ -20,14 +21,14 @@ public:
     Board();
     Board(int variant);
     auto get_fen() -> std::string;
-    auto set_fen(std::string& fen_string) -> bool;
-    auto check_fen_is_valid(std::string fen) -> bool;
+    auto set_fen(const std::string& fen_string) -> bool;
+    auto static check_fen_is_valid(const std::string& fen) -> bool;
     auto print() -> void;
     auto print_fen() -> void;
     auto print_position() -> void;
-    auto is_legal_move(std::string notation) -> bool;
-    auto move(std::string notation) -> bool;
-    auto parse_move(std::string move) -> void;
+    auto is_legal_move(const std::string& notation) -> bool;
+    auto move(const std::string& notation) -> bool;
+    auto parse_move(const std::string& move) -> void;
     auto get_pieces() -> std::vector<std::unique_ptr<Piece>>&;
 };
 

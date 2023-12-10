@@ -33,13 +33,12 @@ Board::Board(){
     const std::vector<char> back_rank{'R', 'N', 'B', 'K', 'Q', 'B', 'N', 'R'};
     m_pieces.reserve(32);
 
-    for (int i=0; i<back_rank.size(); i++){ {
-        char file = 'a' + i;
+    for (std::size_t i=0; i<back_rank.size(); i++){
+        char file = char('a' + i);
         m_pieces.emplace_back(std::make_unique<Pawn>('w', Square{file, '2'}));
         m_pieces.emplace_back(make_type_ptr(i, 'w', file, '1'));
         m_pieces.emplace_back(std::make_unique<Pawn>('b', Square{file, '7'}));
         m_pieces.emplace_back(make_type_ptr(i, 'b', file, '8'));
-        }
     }
 }
 
@@ -56,16 +55,19 @@ Board::Board(int variant){
         // Black will mirror White's randomised pieces
         // King must be between the two rooks so that castling both sides is valid
         // otherwise, randomise the backrank
+        m_turn = 'w';
+        // FEN - position, turn, castling rights, halfmove counter (for 50 move rule), fullmove counter
 
-        const std::vector<std::pair<char, char>> starting_square{{'R', 'a'}, {'N', 'b'}, {'B', 'c'}, {'Q', 'd'}, {'K', 'e'}, {'B', 'f'}, {'N', 'g'}, {'R', 'h'}};
+        std::vector<char> back_rank{'R', 'N', 'B', 'K', 'Q', 'B', 'N', 'R'};
+        std::shuffle(back_rank.begin(), back_rank.end(), std::random_device());
         m_pieces.reserve(32);
 
-        for (auto i: starting_square){ {
-            m_pieces.emplace_back(std::make_unique<Pawn>('w', Square{i.second, '2'}));
-            m_pieces.emplace_back(std::make_unique<Pawn>('w', Square{i.second, '1'}));
-            m_pieces.emplace_back(std::make_unique<Pawn>('b', Square{i.second, '7'}));
-            m_pieces.emplace_back(std::make_unique<Pawn>('b', Square{i.second, '8'}));
-            }
+        for (std::size_t i=0; i<back_rank.size(); i++){
+            char file = char('a' + i);
+            m_pieces.emplace_back(std::make_unique<Pawn>('w', Square{file, '2'}));
+            m_pieces.emplace_back(make_type_ptr(i, 'w', file, '1'));
+            m_pieces.emplace_back(std::make_unique<Pawn>('b', Square{file, '7'}));
+            m_pieces.emplace_back(make_type_ptr(i, 'b', file, '8'));
         }
     }
 }
@@ -75,21 +77,18 @@ auto Board::get_fen() -> std::string {
     return m_current_fen;
 }
 
-auto Board::set_fen(std::string& fen_string) -> bool {
+auto Board::set_fen(const std::string& fen_string) -> bool {
     if (check_fen_is_valid(fen_string)){
         m_current_fen = fen_string;
         return true;
     }
-    else{
-        std::cout << "FEN is not valid.\n";
-        return false;
-    }
+    std::cout << "FEN is not valid.\n";
+    return false;
 }
 
-auto Board::check_fen_is_valid(std::string fen) -> bool {
+auto Board::check_fen_is_valid(const std::string& fen) -> bool {
     // check the formatting is correct
-
-    return true;
+    return fen == "todo";
 }
 
 auto Board::print_fen() -> void {
@@ -129,9 +128,10 @@ auto Board::print() -> void {
         auto rank = piece->get_rank();
         // when printing we start at the top left of the board (a8), so rank=7 (0 index for the array)
         // and file=0 (0 indexed for the array)
-        board_position.at(64 - rank*8 + file-8) = piece->get_type();
+        int current_square = 64 - rank*8 + file-8;
+        board_position.at(current_square) = piece->get_type();
         if (piece->get_colour() == 'b'){
-            board_position.at(64 - rank*8 + file-8) += 32;  // convert to lowercase
+            board_position.at(current_square) += 32;  // convert to lowercase
         }
     }
 
@@ -143,7 +143,7 @@ auto Board::print() -> void {
     }
 }
 
-auto Board::is_legal_move(std::string notation) -> bool {
+auto Board::is_legal_move(const std::string& notation) -> bool {
     std::vector<std::string> legal_moves;
     for (auto& piece: m_pieces){
         auto temp_moves = piece->generate_legal_moves(*this);
@@ -158,7 +158,7 @@ auto Board::is_legal_move(std::string notation) -> bool {
     return true;
 }
 
-auto Board::move(std::string notation) -> bool {
+auto Board::move(const std::string& notation) -> bool {
 
     if (is_legal_move(notation)){
         parse_move(notation);
@@ -167,7 +167,7 @@ auto Board::move(std::string notation) -> bool {
     return false;
 }
 
-auto Board::parse_move(std::string move) -> void {
+auto Board::parse_move(const std::string& move) -> void {
     //Square src;
     Square dst;
     int pad{};
