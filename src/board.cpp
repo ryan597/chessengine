@@ -10,9 +10,9 @@ Board::Board(){
 
     for (auto i: starting_square){ {
         m_pieces.emplace_back(std::make_unique<Pawn>('w', Square{i.second, '2'}));
-        m_pieces.emplace_back(std::make_unique<Pawn>('w', Square{i.second, '1'}));
+        m_pieces.emplace_back(std::make_unique<Rook>('w', Square{i.second, '1'}));
         m_pieces.emplace_back(std::make_unique<Pawn>('b', Square{i.second, '7'}));
-        m_pieces.emplace_back(std::make_unique<Pawn>('b', Square{i.second, '8'}));
+        m_pieces.emplace_back(std::make_unique<Rook>('b', Square{i.second, '8'}));
         }
     }
 }
@@ -115,7 +115,10 @@ auto Board::print() -> void {
 auto Board::is_legal_move(std::string notation) -> bool {
     std::vector<std::string> legal_moves;
     for (auto& piece: m_pieces){
-        legal_moves.emplace_back(piece->generate_legal_moves(this));
+        auto temp_moves = piece->generate_legal_moves(*this);
+        for (auto move: temp_moves){
+            legal_moves.emplace_back(move);
+        }
     }
     // TODO: check if two pieces can move to the same square
     // eg. R on d1 and R on d8 can both move to d5, so the moves must be
