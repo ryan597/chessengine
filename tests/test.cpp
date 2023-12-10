@@ -84,6 +84,7 @@ TEST_CASE("Board constructor sets up pieces correctly", "[board]"){
     REQUIRE(num_black == 16);
 }
 
+
 TEST_CASE("Board print", "[board]"){
     Board chessboard{};
     std::stringstream ss;
@@ -91,11 +92,12 @@ TEST_CASE("Board print", "[board]"){
     auto old_buf = std::cout.rdbuf(ss.rdbuf());
 
     chessboard.print();
+    std::cout.rdbuf(old_buf); //reset now, causes a segfault if done after the require assertion
     std::string expected_output{"rnbqkbnr\npppppppp\n--------\n--------\n--------\n--------\nPPPPPPPP\nRNBQKBNR\n"};
-    REQUIRE(expected_output == ss.str());
 
-    std::cout.rdbuf(old_buf); //reset
+    REQUIRE(expected_output == ss.str());
 }
+
 
 TEST_CASE("Board move", "[board, piece]"){
     Board chessboard{};
