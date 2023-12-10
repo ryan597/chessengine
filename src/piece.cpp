@@ -1,5 +1,6 @@
 #include "piece.hpp"
 
+Square::Square() : file{'0'}, rank{'0'} {}
 Square::Square(char file, char rank) : file{file}, rank{rank} {}
 
 Square::Square(std::string position) {
@@ -7,10 +8,8 @@ Square::Square(std::string position) {
     rank = position[1];
 }
 
-auto Square::operator==(Square& other) -> bool{
-    if (file == other.file && rank == other.rank)
-        return true;
-    return false;
+auto Square::operator==(const Square& other) const -> bool {
+    return (file == other.file && rank == other.rank);
 }
 
 auto Square::mirror() -> void {
@@ -72,33 +71,33 @@ auto Piece::move(Square dest) -> void {
 
 Pawn::Pawn(char colour, Square position): Piece('P', colour, position){}
 
-auto Pawn::generate_legal_moves(Board* board) -> std::vector<std::string> {
+auto Pawn::generate_legal_moves(Board& board) -> std::vector<std::string> {
 
     return {" "};
 }
 
 
 Rook::Rook(char colour, Square position): Piece('R', colour, position){}
-auto Rook::generate_legal_moves(Board* board) -> std::vector<std::string> {
+auto Rook::generate_legal_moves(Board& board) -> std::vector<std::string> {
     return {" "};
 }
 
 Knight::Knight(char colour, Square position): Piece('N', colour, position){}
-auto Knight::generate_legal_moves(Board* board) -> std::vector<std::string> {
+auto Knight::generate_legal_moves(Board& board) -> std::vector<std::string> {
     return {" "};
 }
 
 Bishop::Bishop(char colour, Square position): Piece('B', colour, position){}
-auto Bishop::generate_legal_moves(Board* board) -> std::vector<std::string> {
+auto Bishop::generate_legal_moves(Board& board) -> std::vector<std::string> {
     return {" "};
 }
 
 Queen::Queen(char colour, Square position): Piece('Q', colour, position){}
-auto Queen::generate_legal_moves(Board* board) -> std::vector<std::string> {
+auto Queen::generate_legal_moves(Board& board) -> std::vector<std::string> {
     return {" "};
 }
 
 King::King(char colour, Square position): Piece('K', colour, position){}
-auto King::generate_legal_moves(Board* board) -> std::vector<std::string> {
+auto King::generate_legal_moves(Board& board) -> std::vector<std::string> {
     return {" "};
 }

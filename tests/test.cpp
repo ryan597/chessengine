@@ -1,6 +1,6 @@
 #include <catch2/catch_test_macros.hpp>
 #include <sstream>
-#include <set>
+#include <unordered_set>
 
 #include "board.hpp"
 #include "piece.hpp"
@@ -28,11 +28,10 @@
  *
 */
 
-
 TEST_CASE("Board constructor sets up pieces correctly", "[board]"){
     Board chessboard{};
     auto& piece_vector = chessboard.get_pieces();
-    std::set<Square> occupied{};
+    std::unordered_set<Square, Square::HashFunction> occupied;
     int num_white{};
     int num_black{};
 
@@ -41,7 +40,7 @@ TEST_CASE("Board constructor sets up pieces correctly", "[board]"){
         auto colour = piece->get_colour();
         auto position = piece->get_square();
 
-        REQUIRE(occupied.find(position) == occupied.end());
+        REQUIRE(occupied.contains(position) == false);
         occupied.insert(position);
         // By doing this mirror, we automatically check that black pieces are on the 7th and 8th ranks
         // as the mirrors must be on the 1st and 2nd ranks to pass the checks below, just as with the white pieces.
@@ -61,15 +60,15 @@ TEST_CASE("Board constructor sets up pieces correctly", "[board]"){
             break;
         case 'R':
             REQUIRE(position.rank == '1');
-            REQUIRE(position.file == 'a' || position.file == 'h');
+            REQUIRE((position.file == 'a' || position.file == 'h'));
             break;
         case 'N':
             REQUIRE(position.rank == '1');
-            REQUIRE(position.file == 'b' || position.file == 'g');
+            REQUIRE((position.file == 'b' || position.file == 'g'));
             break;
         case 'B':
             REQUIRE(position.rank == '1');
-            REQUIRE(position.file == 'c' || position.file == 'f');
+            REQUIRE((position.file == 'c' || position.file == 'f'));
             break;
         case 'Q':
             REQUIRE(position.rank == '1');
@@ -92,8 +91,8 @@ TEST_CASE("Board print", "[board]"){
     auto old_buf = std::cout.rdbuf(ss.rdbuf());
 
     chessboard.print();
-    std::string expected_output{"rnbqkbnr\nPPPPPPPP\n--------\n--------\n--------\n--------\nPPPPPPPP\nRNBQKBNR\n"};
-    REQUIRE(expected_output.compare(ss.str()) == 0);
+    std::string expected_output{"rnbqkbnr\npppppppp\n--------\n--------\n--------\n--------\nPPPPPPPP\nRNBQKBNR\n"};
+    REQUIRE(expected_output == ss.str());
 
     std::cout.rdbuf(old_buf); //reset
 }
