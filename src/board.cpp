@@ -1,21 +1,48 @@
 #include "board.hpp"
 
+
+auto make_type_ptr(int i, char col, char file, char rank) -> std::unique_ptr<Piece>{
+    switch(i){
+    case 0:
+        return std::make_unique<Rook>(col, Square{file, rank});
+    case 1:
+        return std::make_unique<Knight>(col, Square{file, rank});
+    case 2:
+        return std::make_unique<Bishop>(col, Square{file, rank});
+    case 3:
+        return std::make_unique<Queen>(col, Square{file, rank});
+    case 4:
+        return std::make_unique<King>(col, Square{file, rank});
+    case 5:
+        return std::make_unique<Bishop>(col, Square{file, rank});
+    case 6:
+        return std::make_unique<Knight>(col, Square{file, rank});
+    case 7:
+        return std::make_unique<Rook>(col, Square{file, rank});
+    default:
+        std::cout << "Error, not a piece, exiting.";
+        exit(1);
+    }
+}
+
 Board::Board(){
     m_turn = 'w';
     // FEN - position, turn, castling rights, halfmove counter (for 50 move rule), fullmove counter
     m_current_fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
-    const std::vector<std::pair<char, char>> starting_square{{'R', 'a'}, {'N', 'b'}, {'B', 'c'}, {'Q', 'd'}, {'K', 'e'}, {'B', 'f'}, {'N', 'g'}, {'R', 'h'}};
+    const std::vector<char> back_rank{'R', 'N', 'B', 'K', 'Q', 'B', 'N', 'R'};
     m_pieces.reserve(32);
 
-    for (auto i: starting_square){ {
-        m_pieces.emplace_back(std::make_unique<Pawn>('w', Square{i.second, '2'}));
-        m_pieces.emplace_back(std::make_unique<Rook>('w', Square{i.second, '1'}));
-        m_pieces.emplace_back(std::make_unique<Pawn>('b', Square{i.second, '7'}));
-        m_pieces.emplace_back(std::make_unique<Rook>('b', Square{i.second, '8'}));
+    for (int i=0; i<back_rank.size(); i++){ {
+        char file = 'a' + i;
+        m_pieces.emplace_back(std::make_unique<Pawn>('w', Square{file, '2'}));
+        m_pieces.emplace_back(make_type_ptr(i, 'w', file, '1'));
+        m_pieces.emplace_back(std::make_unique<Pawn>('b', Square{file, '7'}));
+        m_pieces.emplace_back(make_type_ptr(i, 'b', file, '8'));
         }
     }
 }
+
 
 Board::Board(int variant){
     m_turn = 'w';
@@ -93,7 +120,8 @@ auto Board::print_position() -> void {
 }
 
 auto Board::print() -> void {
-    std::array<char, 64> board_position{};
+    std::vector<char> board_position;
+    board_position.resize(64);
     std::fill(board_position.begin(), board_position.end(), '-');
 
     for (auto &piece: m_pieces){
@@ -102,6 +130,9 @@ auto Board::print() -> void {
         // when printing we start at the top left of the board (a8), so rank=7 (0 index for the array)
         // and file=0 (0 indexed for the array)
         board_position.at(64 - rank*8 + file-8) = piece->get_type();
+        if (piece->get_colour() == 'b'){
+            board_position.at(64 - rank*8 + file-8) += 32;  // convert to lowercase
+        }
     }
 
     for (int i=0; i<64; i++){

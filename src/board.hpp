@@ -4,7 +4,6 @@
 #include <iostream>
 #include <algorithm>
 #include <memory>
-#include <array>
 
 #include "piece.hpp"
 
