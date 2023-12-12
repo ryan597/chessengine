@@ -4,7 +4,7 @@ project(ChessNGin
         VERSION 0.1
         LANGUAGES C CXX)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 
 if(CMAKE_BUILD_TYPE MATCHES Debug)
     enable_testing()
