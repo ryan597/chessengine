@@ -73,13 +73,13 @@ Pawn::Pawn(char colour, Square position): Piece('P', colour, position){}
 
 auto Pawn::generate_legal_moves(Board& board) -> std::vector<std::string> {
 
-    return {" "};
+    return {"a3", "a4"};
 }
 
 
 Rook::Rook(char colour, Square position): Piece('R', colour, position){}
 auto Rook::generate_legal_moves(Board& board) -> std::vector<std::string> {
-    return {" "};
+    return {"NONE"};
 }
 
 Knight::Knight(char colour, Square position): Piece('N', colour, position){}
