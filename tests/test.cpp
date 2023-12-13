@@ -112,26 +112,33 @@ TEST_CASE("Board move", "[board, piece]"){
 }
 
 
+
 TEST_CASE("Print Position from FEN", "[board, fen]"){
-    std::string fen1 = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
-    std::string fen2 = "rnbqkb1r/pp1np2p/2p1p3/2Pp3p/3P4/2N5/PP2BPPP/R1B1K1NR w KQkq - 0 10";
-    std::string fen3 = "5k1r/ppq1rp2/2pb4/3bNBQ1/1P1P4/P3R3/6PP/4R1K1 w - - 1 29";
-
-    std::string expected1 = "rnbqkbnr\npppppppp\n........\n........\n........\n........\nPPPPPPPP\nRNBQKBNR\n";
-    std::string expected2 = "rnbqkb.r\npp.np..p\n..p.p...\n..Pp...p\n...P....\n..N.....\nPP..BPPP\nR.B.K.NR\n";
-    std::string expected3 = ".....k.r\nppq.rp..\n..pb....\n...bNBQ.\n.P.P....\nP...R...\n......PP\n....R.K.\n";
-
-    std::string expected_output = expected1 + expected2 + expected3;
-
     std::stringstream ss;
     //redirect cout to stringstream, save old buffer
     auto old_buf = std::cout.rdbuf(ss.rdbuf());
 
+    SECTION("FEN1"){
+    std::string fen1 = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+    std::string expected1 = "rnbqkbnr\npppppppp\n........\n........\n........\n........\nPPPPPPPP\nRNBQKBNR\n";
     Board::print_position(fen1);
-    Board::print_position(fen2);
-    Board::print_position(fen3);
-
     std::cout.rdbuf(old_buf); //reset now, causes a segfault if done after the require assertion
+    REQUIRE(expected1 == ss.str());
+    }
 
-    REQUIRE(expected_output == ss.str());
+    SECTION("FEN2"){
+    std::string fen2 = "rnbqkb1r/pp1np2p/2p1p3/2Pp3p/3P4/2N5/PP2BPPP/R1B1K1NR w KQkq - 0 10";
+    std::string expected2 = "rnbqkb.r\npp.np..p\n..p.p...\n..Pp...p\n...P....\n..N.....\nPP..BPPP\nR.B.K.NR\n";
+    Board::print_position(fen2);
+    std::cout.rdbuf(old_buf); //reset now, causes a segfault if done after the require assertion
+    REQUIRE(expected2 == ss.str());
+    }
+
+    SECTION("FEN3"){
+    std::string fen3 = "5k1r/ppq1rp2/2pb4/3bNBQ1/1P1P4/P3R3/6PP/4R1K1 w - - 1 29";
+    std::string expected3 = ".....k.r\nppq.rp..\n..pb....\n...bNBQ.\n.P.P....\nP...R...\n......PP\n....R.K.\n";
+    Board::print_position(fen3);
+    std::cout.rdbuf(old_buf); //reset now, causes a segfault if done after the require assertion
+    REQUIRE(expected3 == ss.str());
+    }
 }
