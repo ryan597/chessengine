@@ -72,7 +72,6 @@ auto Piece::move(Square dest) -> void {
 Pawn::Pawn(char colour, Square position): Piece('P', colour, position){}
 
 auto Pawn::generate_legal_moves(Board& board) -> std::vector<std::string> {
-
     return {"a3", "a4"};
 }
 
