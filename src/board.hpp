@@ -25,7 +25,7 @@ public:
     auto static check_fen_is_valid(const std::string& fen) -> bool;
     auto print() -> void;
     auto print_fen() -> void;
-    auto print_position() -> void;
+    auto static print_position(std::string& fen) -> void;
     auto is_legal_move(const std::string& notation) -> bool;
     auto move(const std::string& notation) -> bool;
     auto parse_move(const std::string& move) -> void;
