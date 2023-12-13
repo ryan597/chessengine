@@ -95,9 +95,9 @@ auto Board::print_fen() -> void {
     std::cout << get_fen();
 }
 
-auto Board::print_position() -> void {
-    // printing from the FEN - Likely to scrap
-    auto fen = get_fen();
+// This will print ASCII position from a given FEN, doesnt require an instance of the class
+auto Board::print_position(std::string& fen) -> void {
+    // printing from the FEN
     std::vector<char> pieces = {'p','r','n','b','q','k','P','R','N','B','Q','K'};
     std::string asci_position{};
     for (auto& i: fen){
@@ -112,7 +112,8 @@ auto Board::print_position() -> void {
         }
         else if (i == ' ')
         {
-            std::cout << asci_position << '\n';
+            std::cout << asci_position << '\n'
+                      << "";
             return;
         }
     }
@@ -121,7 +122,7 @@ auto Board::print_position() -> void {
 auto Board::print() -> void {
     std::vector<char> board_position;
     board_position.resize(64);
-    std::fill(board_position.begin(), board_position.end(), '-');
+    std::fill(board_position.begin(), board_position.end(), '.');
 
     for (auto &piece: m_pieces){
         auto file = piece->get_file();
