@@ -85,6 +85,50 @@ TEST_CASE("Board constructor sets up pieces correctly", "[board]"){
 }
 
 
+TEST_CASE("Board constructor for Fischer Random", "[board]"){
+    Board chessboard{960};
+    auto& piece_vector = chessboard.get_pieces();
+    std::unordered_set<Square, Square::HashFunction> occupied;
+    int num_white{};
+    int num_black{};
+
+    for (auto& piece: piece_vector){
+        auto type = piece->get_type();
+        auto colour = piece->get_colour();
+        auto position = piece->get_square();
+
+        REQUIRE(occupied.contains(position) == false);
+        occupied.insert(position);
+        // By doing this mirror, we automatically check that black pieces are on the 7th and 8th ranks
+        // as the mirrors must be on the 1st and 2nd ranks to pass the checks below, just as with the white pieces.
+        // The above check for occupied squares also ensures we cannot have 2 white rooks on a1 and 2 black rooks on h8 which would
+        // otherwise pass the below checks
+        if (colour == 'b'){
+            position.mirror();
+            num_black++;
+        }
+        else {
+            num_white++;
+        }
+
+        switch(type){
+        case 'P':
+            REQUIRE(position.rank == '2');
+            break;
+        case 'R':
+        case 'N':
+        case 'B':
+        case 'Q':
+        case 'K':
+            REQUIRE(position.rank == '1');
+            break;
+        }
+    }
+    REQUIRE(num_white == 16);
+    REQUIRE(num_black == 16);
+}
+
+
 TEST_CASE("Board print", "[board]"){
     Board chessboard{};
     std::stringstream ss;
