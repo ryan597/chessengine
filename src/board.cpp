@@ -164,7 +164,7 @@ auto Board::move(const std::string &notation) -> bool {
   return false;
 }
 
-auto Board::parse_move(const std::string &move) -> void {
+auto Board::parse_move(const std::string &move) -> bool {
   // Square src;
   Square dst;
   int pad{};
@@ -179,11 +179,13 @@ auto Board::parse_move(const std::string &move) -> void {
     for (auto &i : m_pieces) {
       if (i->get_type() == 'P' && i->get_colour() == m_turn) {
         i->move(dst);
-        return;
+        return true;
       }
     }
   } else { // piece move denoted by uppercase letter R,N,B,Q,K
+    return true;
   }
+  return false;
 }
 
 auto Board::get_pieces() -> std::vector<std::unique_ptr<Piece>> & {

@@ -28,7 +28,7 @@ public:
   auto static print_position(std::string &fen) -> void;
   auto is_legal_move(const std::string &notation) -> bool;
   auto move(const std::string &notation) -> bool;
-  auto parse_move(const std::string &move) -> void;
+  auto parse_move(const std::string &move) -> bool;
   auto get_pieces() -> std::vector<std::unique_ptr<Piece>> &;
 };
 
