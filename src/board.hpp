@@ -21,7 +21,7 @@ public:
   Board();
   Board(int variant);
   auto get_fen() -> std::string;
-  auto set_fen(const std::string &fen_string) -> bool;
+  auto set_from_fen(const std::string &fen_string) -> bool;
   auto static check_fen_is_valid(const std::string &fen) -> bool;
   auto print() -> void;
   auto print_fen() -> void;

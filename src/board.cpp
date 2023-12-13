@@ -78,7 +78,7 @@ auto Board::get_fen() -> std::string {
   return m_current_fen;
 }
 
-auto Board::set_fen(const std::string &fen_string) -> bool {
+auto Board::set_from_fen(const std::string &fen_string) -> bool {
   if (check_fen_is_valid(fen_string)) {
     m_current_fen = fen_string;
     return true;
