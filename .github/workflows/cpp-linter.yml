@@ -24,10 +24,10 @@ jobs:
           lines-changed-only: false
           files-changed-only: true
           step-summary: true
-          extra-args: -std=c++17 -Wall -Wextra
+          extra-args: -std=c++20
 
       - name: Fail fast?!
         if: steps.linter.outputs.checks-failed > 0
-        run: echo "Some files failed the linting checks!"
-        # for actual deployment
-        # run: exit 1
+        run: |
+          echo "Some files failed the linting checks!"
+          exit 1
