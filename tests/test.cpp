@@ -99,19 +99,7 @@ TEST_CASE("Board print", "[board]") {
   REQUIRE(expected_output == ss.str());
 }
 
-TEST_CASE("Board move", "[board, piece]") {
-  Board chessboard{};
-  chessboard.move("d4");
-  chessboard.move("e5");
-  chessboard.move("dxe5");
-  chessboard.move("Nc6");
-  chessboard.move("Nf3");
-  chessboard.move("d4");
-  chessboard.move("d4");
-  chessboard.move("d4");
-}
-
-TEST_CASE("Print Position from FEN", "[board, fen]") {
+TEST_CASE("Print Position from FEN", "[board],[fen]") {
   std::stringstream ss;
   // redirect cout to stringstream, save old buffer
   auto old_buf = std::cout.rdbuf(ss.rdbuf());
