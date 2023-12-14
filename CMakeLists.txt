@@ -6,6 +6,8 @@ project(ChessNGin
 
 set(CMAKE_CXX_STANDARD 20)
 
+add_compile_options(-Wall -Wextra)
+
 if(CMAKE_BUILD_TYPE MATCHES Debug)
     enable_testing()
     list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
