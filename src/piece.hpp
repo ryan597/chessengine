@@ -50,6 +50,7 @@ public:
   auto move(Square dest) -> void;
   auto virtual generate_legal_moves(Board &board)
       -> std::vector<std::string> = 0;
+  virtual ~Piece() {}
 };
 
 class Pawn : public Piece {

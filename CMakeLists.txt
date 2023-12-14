@@ -6,7 +6,7 @@ project(ChessNGin
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_compile_options(-Wall -Wextra)
+add_compile_options(-Wall -Wextra -Wpedantic -Wno-unused-parameter -Wnon-virtual-dtor)
 
 if(CMAKE_BUILD_TYPE MATCHES Debug)
     enable_testing()
