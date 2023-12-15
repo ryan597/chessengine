@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.18)
+cmake_minimum_required(VERSION 3.14)
 
 project(ChessNGin
         VERSION 0.1
@@ -6,16 +6,28 @@ project(ChessNGin
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_compile_options(-Wall -Wextra -Wpedantic -Wno-unused-parameter -Wnon-virtual-dtor)
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
 if(CMAKE_BUILD_TYPE MATCHES Debug)
-    enable_testing()
-    list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+    # Flags to be added once refactor is done
+    #-Werror
+    add_compile_options(-Wno-unused-parameter)
 
+    # Code Coverage - download and append compiler flags
+    message(STATUS "Download Code Coverage cmake file")
+    file(DOWNLOAD
+    https://raw.githubusercontent.com/bilke/cmake-modules/master/CodeCoverage.cmake
+    ${CMAKE_SOURCE_DIR}/cmake/CodeCoverage.cmake
+    SHOW_PROGRESS
+    )
     include(CodeCoverage)
     append_coverage_compiler_flags()
+endif()
 
+if(CMAKE_PROJECT_NAME STREQUAL ChessNGin AND BUILD_TESTING)
+    message(STATUS "Testing enabled")
+    enable_testing()
     add_subdirectory(tests)
 endif()
 
-add_subdirectory(src)
+    add_subdirectory(src)

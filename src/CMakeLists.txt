@@ -1,5 +1,5 @@
 set(SOURCES main.cpp piece.cpp)
-add_library(nginlib SHARED
+add_library(nginlib STATIC
     piece.hpp
     player.hpp
     board.hpp
@@ -9,3 +9,11 @@ add_library(nginlib SHARED
 )
 
 add_executable(NGin ${SOURCES})
+
+set(ENABLED_WARNING -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -Wold-style-cast -Wcast-align
+-Woverloaded-virtual -Wconversion -Wsign-conversion -Wmisleading-indentation -Wduplicated-cond
+-Wduplicated-branches -Wlogical-op -Wnull-dereference -Wuseless-cast -Wdouble-promotion
+-Wformat=2)
+
+target_compile_options(nginlib PRIVATE ${ENABLED_WARNING})
+target_compile_options(NGin PRIVATE ${ENABLED_WARNING})

@@ -1,27 +1,34 @@
 name: C++ build
 description: build source files
+inputs:
+  build_type:
+    description: 'cmake build type'
+    required: false
+    default: 'Debug'
+
 runs:
   using: "composite"
   steps:
-    - name: "checkout catch2"
-      uses: actions/checkout@v4
-      with:
-        repository: "catchorg/Catch2"
-        path: catch2
-
-    - name: "create build files for catch2 and install"
-      working-directory: ./catch2
-      run: |
-        cmake -B build -H. -DBUILD_TESTING=OFF
-        sudo cmake --build build/ --target install
-      shell: bash
-
     - name: "install lcov for coverage"
       run: sudo apt install lcov
       shell: bash
 
-    - name: "cmake generate build files and build"
-      run: |
-        cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
-        cmake --build build
+    - name: "check cache CPM"
+      id: cache-cpm
+      uses: actions/cache@v3
+      with:
+        path: |
+          cmake/CPM.cmake
+          cmake/CodeCoverage.cmake
+          cmake/catch2
+          ${{ inputs.build_type }}/_deps/**
+        key: ${{ hashFiles('CMakeLists.txt') }}--cpm
+
+    - name: "generate build files for ${{inputs.build_type}}"
+      run: cmake -S . -B build_${{inputs.build_type}} -DCMAKE_BUILD_TYPE=${{inputs.build_type}} -DCPM_SOURCE_CACHE=cmake -DBUILD_TESTING=on
       shell: bash
+
+    - name: "cmake build targets"
+      run: cmake --build build_${{inputs.build_type}} -j4
+      shell: bash
+
