@@ -20,9 +20,9 @@ runs:
       uses: actions/cache@v3
       with:
         path: |
-          ${{ CACH_DIR }}/CPM.cmake
-          ${{ CACH_DIR }}/CodeCoverage.cmake
-          ${{ CACH_DIR }}/catch2
+          ${{ CACHE_DIR }}/CPM.cmake
+          ${{ CACHE_DIR }}/CodeCoverage.cmake
+          ${{ CACHE_DIR }}/catch2
         key: ${{ hashFiles('CMakeLists.txt') }}--cpm
 
     - name: "generate build files for ${{inputs.build_type}}"
