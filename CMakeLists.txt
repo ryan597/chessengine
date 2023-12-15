@@ -9,7 +9,9 @@ set(CMAKE_CXX_STANDARD 20)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
 if(CMAKE_BUILD_TYPE MATCHES Debug)
-    add_compile_options(-Werror -Wno-unused-parameter)
+    # Flags to be added once refactor is done
+    #-Werror
+    add_compile_options(-Wno-unused-parameter)
 
     # Code Coverage - download and append compiler flags
     message(STATUS "Download Code Coverage cmake file")
