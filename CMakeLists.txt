@@ -22,7 +22,8 @@ if(CMAKE_BUILD_TYPE MATCHES Debug)
         https://github.com/cpm-cmake/CPM.cmake/releases/download/v0.38.3/CPM.cmake
         ${CMAKE_SOURCE_DIR}/cmake/CPM.cmake
         EXPECTED_HASH SHA256=cc155ce02e7945e7b8967ddfaff0b050e958a723ef7aad3766d368940cb15494
-      )
+        SHOW_PROGRESS
+    )
 
     include(CPM)
     CPMAddPackage(
@@ -35,7 +36,9 @@ if(CMAKE_BUILD_TYPE MATCHES Debug)
     # Code Coverage - download and append compiler flags
     file(DOWNLOAD
          https://raw.githubusercontent.com/bilke/cmake-modules/master/CodeCoverage.cmake
-         ${CMAKE_SOURCE_DIR}/cmake/CodeCoverage.cmake)
+         ${CMAKE_SOURCE_DIR}/cmake/CodeCoverage.cmake
+         SHOW_PROGRESS
+    )
     include(CodeCoverage)
     append_coverage_compiler_flags()
 
