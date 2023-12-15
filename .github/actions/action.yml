@@ -14,8 +14,8 @@ runs:
       shell: bash
 
     - name: "check cache CPM"
-      id: cache-cpm-restore
-      uses: actions/cache/restore@v3
+      id: cache-cpm
+      uses: actions/cache@v3
       with:
         path: cmake
         key: ${{ hashFiles('CMakeLists.txt') }}--cpm
@@ -28,9 +28,3 @@ runs:
       run: cmake --build build_${{inputs.build_type}}
       shell: bash
 
-    - name: "caching CPM"
-      id: cache-cpm-save
-      uses: actions/cache/save@v3
-      with:
-        path: cmake
-        key: ${{ hashFiles('CMakeLists.txt') }}--cpm
