@@ -21,6 +21,7 @@ runs:
           cmake/CPM.cmake
           cmake/CodeCoverage.cmake
           cmake/catch2
+          ${{ inputs.build_type }}/_deps/**
         key: ${{ hashFiles('CMakeLists.txt') }}--cpm
 
     - name: "generate build files for ${{inputs.build_type}}"
