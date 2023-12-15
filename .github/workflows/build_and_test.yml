@@ -8,29 +8,78 @@ on:
 
 jobs:
 
-  build:
+  build Debug:
     runs-on: ubuntu-latest
 
     steps:
     - name: "checkout repo"
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
-    - name: "build"
+    - name: "caching CPM"
+      id: cache-cpm
+      uses: actions/cache/restore@v3
+      with:
+        path: cmake/CPM.cmake
+        key: ${{ hashFiles(CMakeLists.txt) }}--cpm
+
+    - name: "caching Catch2"
+      id: cache-catch2
+      uses: actions/cache/restore@v3
+      with:
+        path: build_Debug/_deps
+        key: ${{ hashFiles(CMakeLists.txt) }}--catch2
+
+    - name: "build Debug"
       uses: ./.github/actions
+      with:
+        build_type: Debug
 
-    - name: "test"
-      working-directory: ./build
+    - name: "test Debug"
+      working-directory: ./build_Debug
       run: make test
 
     - name: "code coverage"
-      working-directory: ./build
+      working-directory: ./build_Debug
       run: make coverage
 
     - name: "comment coverage"
       uses: romeovs/lcov-reporter-action@v0.3.1
       with:
-        lcov-file: ./build/coverage.info
+        lcov-file: ./build_Debug/coverage.info
         delete-old-comments: true
         filter-changed-files: true
         title: "Code Coverage Report"
       if: ${{ github.event_name == 'pull_request' }}
+
+
+  build Release:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: "checkout repo"
+      uses: actions/checkout@v4
+
+    - name: "caching CPM"
+      id: cache-cpm
+      uses: actions/cache@v3
+      with:
+        path: cmake/CPM.cmake
+        key: ${{ hashFiles(CMakeLists.txt) }}--cpm
+
+    - name: "caching Catch2"
+      id: cache-catch2
+      uses: actions/cache/restore@v3
+      with:
+        path: build_Release/_deps
+        key: ${{ hashFiles(CMakeLists.txt) }}--catch2
+
+    - name: "build Release"
+      uses: ./.github/actions
+      with:
+        build_type: Release
+
+    - name: "test Release"
+      working-directory: ./build_Release
+      run: make test
+
+
