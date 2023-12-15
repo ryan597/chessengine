@@ -15,5 +15,5 @@ set(ENABLED_WARNING -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -Wold-st
 -Wduplicated-branches -Wlogical-op -Wnull-dereference -Wuseless-cast -Wdouble-promotion
 -Wformat=2)
 
-target_compile_options(nginlib ${ENABLED_WARNING})
-target_compile_options(NGin ${ENABLED_WARNING})
+target_compile_options(nginlib PRIVATE ${ENABLED_WARNING})
+target_compile_options(NGin PRIVATE ${ENABLED_WARNING})
