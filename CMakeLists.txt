@@ -6,11 +6,6 @@ project(ChessNGin
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_compile_options(-Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -Wold-style-cast -Wcast-align
--Woverloaded-virtual -Wconversion -Wsign-conversion -Wmisleading-indentation -Wduplicated-cond
--Wduplicated-branches -Wlogical-op -Wnull-dereference -Wdouble-promotion
--Wformat=2)
-
 if(CMAKE_BUILD_TYPE MATCHES Debug)
     enable_testing()
     add_compile_options(-Werror -Wno-unused-parameter)
