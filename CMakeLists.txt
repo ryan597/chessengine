@@ -7,37 +7,24 @@ project(ChessNGin
 set(CMAKE_CXX_STANDARD 20)
 
 if(CMAKE_BUILD_TYPE MATCHES Debug)
-    enable_testing()
-    add_compile_options(-Werror -Wno-unused-parameter)
     list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
-
-    # Download CPM.cmake
-    file(
-        DOWNLOAD
-        https://github.com/cpm-cmake/CPM.cmake/releases/download/v0.38.3/CPM.cmake
-        ${CMAKE_SOURCE_DIR}/cmake/CPM.cmake
-        EXPECTED_HASH SHA256=cc155ce02e7945e7b8967ddfaff0b050e958a723ef7aad3766d368940cb15494
-        SHOW_PROGRESS
-    )
-
-    include(CPM)
-    CPMAddPackage(
-        NAME Catch2
-        GIT_REPOSITORY "https://github.com/catchorg/Catch2.git"
-        GIT_TAG "v3.5.0"
-    )
-    list(APPEND CMAKE_MODULE_PATH "${Catch2_SOURCE_DIR}/extras")
+    add_compile_options(-Werror -Wno-unused-parameter)
 
     # Code Coverage - download and append compiler flags
+    message(STATUS "Download Code Coverage cmake file")
     file(DOWNLOAD
-         https://raw.githubusercontent.com/bilke/cmake-modules/master/CodeCoverage.cmake
-         ${CMAKE_SOURCE_DIR}/cmake/CodeCoverage.cmake
-         SHOW_PROGRESS
+    https://raw.githubusercontent.com/bilke/cmake-modules/master/CodeCoverage.cmake
+    ${CMAKE_SOURCE_DIR}/cmake/CodeCoverage.cmake
+    SHOW_PROGRESS
     )
     include(CodeCoverage)
     append_coverage_compiler_flags()
+endif()
 
+if(CMAKE_PROJECT_NAME STREQUAL ChessNGin AND BUILD_TESTING)
+    message(STATUS "Testing enabled")
+    enable_testing()
     add_subdirectory(tests)
 endif()
 
-add_subdirectory(src)
+    add_subdirectory(src)
