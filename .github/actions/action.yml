@@ -17,13 +17,11 @@ runs:
       id: cache-cpm-restore
       uses: actions/cache/restore@v3
       with:
-        path: |
-          cpm-cache
-          cmake
+        path: cmake
         key: ${{ hashFiles('CMakeLists.txt') }}--cpm
 
     - name: "generate build files for ${{inputs.build_type}}"
-      run: cmake -S . -B build_${{inputs.build_type}} -DCMAKE_BUILD_TYPE=${{inputs.build_type}} -DCPM_SOURCE_CACHE=cpm-cache
+      run: cmake -S . -B build_${{inputs.build_type}} -DCMAKE_BUILD_TYPE=${{inputs.build_type}} -DCPM_SOURCE_CACHE=cmake
       shell: bash
 
     - name: "cmake build targets"
@@ -34,7 +32,5 @@ runs:
       id: cache-cpm-save
       uses: actions/cache/save@v3
       with:
-        path: |
-          cpm-cache
-          cmake
+        path: cmake
         key: ${{ hashFiles('CMakeLists.txt') }}--cpm
