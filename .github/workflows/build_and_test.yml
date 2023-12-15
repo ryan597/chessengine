@@ -15,20 +15,6 @@ jobs:
     - name: "checkout repo"
       uses: actions/checkout@v4
 
-    - name: "caching CPM"
-      id: cache-cpm
-      uses: actions/cache/restore@v3
-      with:
-        path: cmake/CPM.cmake
-        key: ${{ hashFiles('CMakeLists.txt') }}--cpm
-
-    - name: "caching Catch2"
-      id: cache-catch2
-      uses: actions/cache/restore@v3
-      with:
-        path: build_Debug/_deps
-        key: ${{ hashFiles('CMakeLists.txt') }}--catch2
-
     - name: "build Debug"
       uses: ./.github/actions
       with:
@@ -59,20 +45,6 @@ jobs:
     - name: "checkout repo"
       uses: actions/checkout@v4
 
-    - name: "caching CPM"
-      id: cache-cpm
-      uses: actions/cache@v3
-      with:
-        path: cmake/CPM.cmake
-        key: ${{ hashFiles('CMakeLists.txt') }}--cpm
-
-    - name: "caching Catch2"
-      id: cache-catch2
-      uses: actions/cache/restore@v3
-      with:
-        path: build_Release/_deps
-        key: ${{ hashFiles('CMakeLists.txt') }}--catch2
-
     - name: "build Release"
       uses: ./.github/actions
       with:
@@ -81,5 +53,3 @@ jobs:
     - name: "test Release"
       working-directory: ./build_Release
       run: make test
-
-

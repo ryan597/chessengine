@@ -13,6 +13,20 @@ runs:
       run: sudo apt install lcov
       shell: bash
 
+    - name: "check cache CPM"
+      id: cache-cpm-restore
+      uses: actions/cache/restore@v3
+      with:
+        path: cmake/CPM.cmake
+        key: ${{ hashFiles('CMakeLists.txt') }}--cpm
+
+    - name: "check cache Catch2"
+      id: cache-catch2-restore
+      uses: actions/cache/restore@v3
+      with:
+        path: build_${{ inputs.build_type }}/_deps
+        key: ${{ hashFiles('CMakeLists.txt') }}--catch2
+
     - name: "generate build files for ${{inputs.build_type}}"
       run: cmake -S . -B build_${{inputs.build_type}} -DCMAKE_BUILD_TYPE=${{inputs.build_type}}
       shell: bash
@@ -20,3 +34,17 @@ runs:
     - name: "cmake build targets"
       run: cmake --build build_${{inputs.build_type}}
       shell: bash
+
+    - name: "caching CPM"
+      id: cache-cpm-save
+      uses: actions/cache/save@v3
+      with:
+        path: cmake/CPM.cmake
+        key: ${{ hashFiles('CMakeLists.txt') }}--cpm
+
+    - name: "caching Catch2"
+      id: cache-catch2-save
+      uses: actions/cache/save@v3
+      with:
+        path: build_${{ inputs.build_type }}/_deps
+        key: ${{ hashFiles('CMakeLists.txt') }}--catch2
