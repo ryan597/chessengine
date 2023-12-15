@@ -17,7 +17,10 @@ runs:
       id: cache-cpm
       uses: actions/cache@v3
       with:
-        path: cmake/**
+        path: |
+          ~/cmake/CPM.cmake
+          ~/cmake/CodeCoverage.cmake
+          ~/cmake/catch2
         key: ${{ hashFiles('CMakeLists.txt') }}--cpm
 
     - name: "generate build files for ${{inputs.build_type}}"
