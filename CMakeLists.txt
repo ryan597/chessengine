@@ -7,7 +7,7 @@ project(ChessNGin
 set(CMAKE_CXX_STANDARD 20)
 
 add_compile_options(-Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -Wold-style-cast -Wcast-align
--Woverloaded-virtual -Wconversion -Wsigh-conversion -Wmisleading-indentation -Wduplicated-cond
+-Woverloaded-virtual -Wconversion -Wsign-conversion -Wmisleading-indentation -Wduplicated-cond
 -Wduplicated-branches -Wlogical-op -Wnull-dereference -Wuseless-cast -Wdouble-promotion
 -Wformat=2)
 
