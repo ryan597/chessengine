@@ -5,6 +5,8 @@ inputs:
     description: 'cmake build type'
     required: false
     default: 'Debug'
+env:
+  CACHE_DIR: cmake
 
 runs:
   using: "composite"
@@ -18,13 +20,13 @@ runs:
       uses: actions/cache@v3
       with:
         path: |
-          ~/cmake/CPM.cmake
-          ~/cmake/CodeCoverage.cmake
-          ~/cmake/catch2
+          ${{ CACH_DIR }}/CPM.cmake
+          ${{ CACH_DIR }}/CodeCoverage.cmake
+          ${{ CACH_DIR }}/catch2
         key: ${{ hashFiles('CMakeLists.txt') }}--cpm
 
     - name: "generate build files for ${{inputs.build_type}}"
-      run: cmake -S . -B build_${{inputs.build_type}} -DCMAKE_BUILD_TYPE=${{inputs.build_type}} -DCPM_SOURCE_CACHE=cmake
+      run: cmake -S . -B build_${{inputs.build_type}} -DCMAKE_BUILD_TYPE=${{inputs.build_type}} -DCPM_SOURCE_CACHE=$CACHE_DIR
       shell: bash
 
     - name: "cmake build targets"
