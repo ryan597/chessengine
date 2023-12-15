@@ -8,7 +8,7 @@ on:
 
 jobs:
 
-  build Debug:
+  build-Debug:
     runs-on: ubuntu-latest
 
     steps:
@@ -52,7 +52,7 @@ jobs:
       if: ${{ github.event_name == 'pull_request' }}
 
 
-  build Release:
+  build-Release:
     runs-on: ubuntu-latest
 
     steps:
