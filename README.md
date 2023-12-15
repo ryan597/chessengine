@@ -30,12 +30,13 @@ cmake --build build
 ## Testing
 
 This project will use the `Catch2` testing framework for C++ unit tests.
+CMake will automatically download and build Catch2 for you if you build with the `-DBUILD_TESTING=on` flag.
 
 - [Catch2 github](https://github.com/catchorg/Catch2/tree/devel)
 - [Tutorial on Catch2 here](https://github.com/catchorg/Catch2/blob/devel/docs/tutorial.md#top)
 - [More examples](https://github.com/catchorg/Catch2/blob/devel/docs/list-of-examples.md)
 
-You can install Catch2 (v3) with the following
+You can install Catch2 (v3) on your own system with the following
 
 ```bash
 git clone https://github.com/catchorg/Catch2.git
@@ -48,15 +49,17 @@ Tests can be run after building
 
 ```bash
 cd chessengine
-cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
-cmake --build build
+cmake -S . -B build -DBUILD_TESTING=on
+cmake --build build -j4
 cd build && make test
 ```
 
-To generate the `CodeCoverage` report you need to have installed `lcov` and `gcovr`, then you can make the target
+To generate the `CodeCoverage` report you need to have installed `lcov` and `gcovr`, then you can make the target.
 
 ```bash
-make coverage
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DBUILD_TESTING=on
+cmake --build build -j4
+cd build && make coverage
 ```
 
 The coverage report is viewable by opening the file `./build/coverage/index.html` in a web browser
