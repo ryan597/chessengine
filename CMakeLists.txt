@@ -14,7 +14,7 @@ add_compile_options(-Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -Wold-st
 if(CMAKE_BUILD_TYPE MATCHES Debug)
     enable_testing()
     add_compile_options(-Werror -Wno-unused-parameter)
-    list(APPEND CMAKE_MODULE_PATH "{CMAKE_SOURCE_DIR}/cmake")
+    list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
     # Download CPM.cmake
     file(
