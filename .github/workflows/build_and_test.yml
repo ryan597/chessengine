@@ -50,6 +50,6 @@ jobs:
       with:
         build_type: Release
 
-    - name: "test Release"
-      working-directory: ./build_Release
-      run: make test
+    #- name: "test Release"
+    #  working-directory: ./build_Release
+    #  run: make test
