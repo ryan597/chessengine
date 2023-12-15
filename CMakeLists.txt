@@ -6,13 +6,24 @@ project(ChessNGin
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_compile_options(-Wall -Wextra -Wpedantic -Wno-unused-parameter -Wnon-virtual-dtor)
+add_compile_options(-Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -Wold-style-cast -Wcast-align
+-Woverloaded-virtual -Wconversion -Wsigh-conversion -Wmisleading-indentation -Wduplicated-cond
+-Wduplicated-branches -Wlogical-op -Wnull-dereference -Wuseless-cast -Wdouble-promotion
+-Wformat=2)
 
 if(CMAKE_BUILD_TYPE MATCHES Debug)
     enable_testing()
-    list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+    add_compile_options(-Werror -Wno-unused-parameter)
+    # Download CPM.cmake
+    file(
+        DOWNLOAD
+        https://github.com/cpm-cmake/CPM.cmake/releases/download/v0.38.3/CPM.cmake
+        ${CMAKE_CURRENT_BINARY_DIR}/cmake/CPM.cmake
+        EXPECTED_HASH SHA256=cc155ce02e7945e7b8967ddfaff0b050e958a723ef7aad3766d368940cb15494
+      )
 
-    include(CPM)
+    include(${CMAKE_CURRENT_BINARY_DIR}/cmake/CPM.cmake)
+
     CPMAddPackage(
         NAME Catch2
         GIT_REPOSITORY "https://github.com/catchorg/Catch2.git"
