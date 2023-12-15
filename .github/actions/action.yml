@@ -28,6 +28,6 @@ runs:
       shell: bash
 
     - name: "cmake build targets"
-      run: cmake --build build_${{inputs.build_type}}
+      run: cmake --build build_${{inputs.build_type}} - j 4
       shell: bash
 
