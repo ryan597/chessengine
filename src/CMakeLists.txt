@@ -10,10 +10,14 @@ add_library(nginlib STATIC
 
 add_executable(NGin ${SOURCES})
 
-set(ENABLED_WARNING -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -Wold-style-cast -Wcast-align
--Woverloaded-virtual -Wconversion -Wsign-conversion -Wmisleading-indentation -Wduplicated-cond
--Wduplicated-branches -Wlogical-op -Wnull-dereference -Wuseless-cast -Wdouble-promotion
--Wformat=2)
+if(MSVC)
+    set(ENABLED_WARNINGS /WX  /Wall)
+else()
+    set(ENABLED_WARNING -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -Wold-style-cast -Wcast-align
+    -Woverloaded-virtual -Wconversion -Wsign-conversion -Wmisleading-indentation -Wduplicated-cond
+    -Wduplicated-branches -Wlogical-op -Wnull-dereference -Wuseless-cast -Wdouble-promotion
+    -Wformat=2)
+endif()
 
 target_compile_options(nginlib PRIVATE ${ENABLED_WARNING})
 target_compile_options(NGin PRIVATE ${ENABLED_WARNING})
