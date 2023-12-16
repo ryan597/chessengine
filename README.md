@@ -24,7 +24,7 @@ Using the included `CMakeLists.txt` file.
 git clone https://github.com/ryan597/chessengine.git
 cd chessengine
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
-cmake --build build
+cmake --build build -j4
 ```
 
 ## Testing
@@ -54,7 +54,7 @@ cmake --build build -j4
 cd build && make test
 ```
 
-To generate the `CodeCoverage` report you need to have installed `lcov` and `gcovr`, then you can make the target.
+To generate the `CodeCoverage` report you need to have installed `lcov`, then you can make the target.
 
 ```bash
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DBUILD_TESTING=on

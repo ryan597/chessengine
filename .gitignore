@@ -1,5 +1,3 @@
 build
-build_Release
-build_Debug
+cmake
 .vscode/
-CodeCoverage.cmake
