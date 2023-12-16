@@ -23,8 +23,8 @@ Using the included `CMakeLists.txt` file.
 ```bash
 git clone https://github.com/ryan597/chessengine.git
 cd chessengine
-cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
-cmake --build build
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCPM_SOURCE_CACHE=cmake
+cmake --build build -j8
 ```
 
 ## Testing
@@ -41,7 +41,7 @@ You can install Catch2 (v3) on your own system with the following
 ```bash
 git clone https://github.com/catchorg/Catch2.git
 cd Catch2
-cmake -B build -H. -DBUILD_TESTING=OFF
+cmake -B build -H. -DBUILD_TESTING=OFF -j8
 sudo cmake --build build/ --target install
 ```
 
@@ -49,16 +49,16 @@ Tests can be run after building
 
 ```bash
 cd chessengine
-cmake -S . -B build -DBUILD_TESTING=on
+cmake -S . -B build -DBUILD_TESTING=ON -DCPM_SOURCE_CACHE=cmake
 cmake --build build -j4
 cd build && make test
 ```
 
-To generate the `CodeCoverage` report you need to have installed `lcov` and `gcovr`, then you can make the target.
+To generate the `CodeCoverage` report you need to have installed `lcov`, then you can make the target.
 
 ```bash
-cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DBUILD_TESTING=on
-cmake --build build -j4
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DBUILD_TESTING=ON -DCPM_SOURCE_CACHE=cmake
+cmake --build build -j8
 cd build && make coverage
 ```
 
