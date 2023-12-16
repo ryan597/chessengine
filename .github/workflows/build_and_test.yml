@@ -14,7 +14,6 @@ jobs:
     steps:
     - name: "install lcov for coverage"
       run: sudo apt install lcov
-      shell: bash
 
     - name: "checkout repo"
       uses: actions/checkout@v4
@@ -72,4 +71,4 @@ jobs:
 
     - name: "test Release"
       working-directory: ./build_Release
-      run: make test
+      run: ctest --output-on-failure
