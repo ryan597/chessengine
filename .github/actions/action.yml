@@ -9,9 +9,6 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: "install lcov for coverage"
-      run: sudo apt install lcov
-      shell: bash
 
     - name: "check cache CPM"
       id: cache-cpm
@@ -20,7 +17,7 @@ runs:
         path: |
           cmake/CPM.cmake
           cmake/CodeCoverage.cmake
-          cmake/catch2
+          cmake/catch2/**
           ${{ inputs.build_type }}/_deps/**
         key: ${{ hashFiles('CMakeLists.txt') }}--cpm
 
@@ -29,6 +26,6 @@ runs:
       shell: bash
 
     - name: "cmake build targets"
-      run: cmake --build build_${{inputs.build_type}} -j4
+      run: cmake --build build_${{inputs.build_type}} -j8
       shell: bash
 

@@ -12,6 +12,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: "install lcov for coverage"
+      run: sudo apt install lcov
+
     - name: "checkout repo"
       uses: actions/checkout@v4
 
@@ -50,6 +53,22 @@ jobs:
       with:
         build_type: Release
 
-    #- name: "test Release"
-    #  working-directory: ./build_Release
-    #  run: make test
+    - name: "test Release"
+      working-directory: ./build_Release
+      run: make test
+
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+    - name: "checkout repo"
+      uses: actions/checkout@v4
+
+    - name: "build Release"
+      uses: ./.github/actions
+      with:
+        build_type: Release
+
+    - name: "test Release"
+      working-directory: ./build_Release
+      run: ctest --output-on-failure

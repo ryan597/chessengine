@@ -13,8 +13,8 @@ CPMAddPackage(
     GIT_REPOSITORY "https://github.com/catchorg/Catch2.git"
     GIT_TAG "v3.5.0"
 )
-list(APPEND CMAKE_MODULE_PATH "${Catch2_SOURCE_DIR}/extras")
 
+list(APPEND CMAKE_MODULE_PATH "${Catch2_SOURCE_DIR}/extras")
 
 # These tests can use the Catch2-provided main
 add_executable(tests test.cpp)
@@ -26,7 +26,7 @@ include(CTest)
 include(Catch)
 catch_discover_tests(tests)
 
-if(CMAKE_PROJECT_NAME STREQUAL ChessNGin AND CMAKE_BUILD_TYPE MATCHES Debug)
+if( NOT MSVC AND CMAKE_BUILD_TYPE MATCHES Debug)
     setup_target_for_coverage_lcov(NAME coverage
                                     EXECUTABLE tests
                                     EXCLUDE "/usr/*" "cmake/catch2/*"
