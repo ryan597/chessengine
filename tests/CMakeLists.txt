@@ -29,6 +29,6 @@ catch_discover_tests(tests)
 if(CMAKE_PROJECT_NAME STREQUAL ChessNGin AND CMAKE_BUILD_TYPE MATCHES Debug)
     setup_target_for_coverage_lcov(NAME coverage
                                     EXECUTABLE tests
-                                    EXCLUDE "/usr/*"
+                                    EXCLUDE "/usr/*" "cmake/catch2/*"
                                     DEPENDENCIES tests nginlib)
 endif()
