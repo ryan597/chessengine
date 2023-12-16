@@ -10,6 +10,7 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
 if(CMAKE_BUILD_TYPE MATCHES Debug)
     if(MSVC)
+        #/WX
         add_compile_options(/W4)
     else()
         # Flags to be added once refactor is done

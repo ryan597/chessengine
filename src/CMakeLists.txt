@@ -11,7 +11,7 @@ add_library(nginlib STATIC
 add_executable(NGin ${SOURCES})
 
 if(MSVC)
-    set(ENABLED_WARNINGS /WX  /Wall)
+    set(ENABLED_WARNINGS /Wall)
 else()
     set(ENABLED_WARNING -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -Wold-style-cast -Wcast-align
     -Woverloaded-virtual -Wconversion -Wsign-conversion -Wmisleading-indentation -Wduplicated-cond
