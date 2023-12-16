@@ -12,6 +12,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: "install lcov for coverage"
+      run: sudo apt install lcov
+      shell: bash
+
     - name: "checkout repo"
       uses: actions/checkout@v4
 
