@@ -21,14 +21,14 @@ public:
   Board();
   Board(int variant);
   auto get_fen() -> std::string;
-  auto set_fen(const std::string &fen_string) -> bool;
+  auto set_from_fen(const std::string &fen_string) -> bool;
   auto static check_fen_is_valid(const std::string &fen) -> bool;
   auto print() -> void;
   auto print_fen() -> void;
   auto static print_position(std::string &fen) -> void;
   auto is_legal_move(const std::string &notation) -> bool;
   auto move(const std::string &notation) -> bool;
-  auto parse_move(const std::string &move) -> void;
+  auto parse_move(const std::string &move) -> bool;
   auto get_pieces() -> std::vector<std::unique_ptr<Piece>> &;
 };
 

@@ -78,7 +78,7 @@ auto Board::get_fen() -> std::string {
   return m_current_fen;
 }
 
-auto Board::set_fen(const std::string &fen_string) -> bool {
+auto Board::set_from_fen(const std::string &fen_string) -> bool {
   if (check_fen_is_valid(fen_string)) {
     m_current_fen = fen_string;
     return true;
@@ -164,7 +164,7 @@ auto Board::move(const std::string &notation) -> bool {
   return false;
 }
 
-auto Board::parse_move(const std::string &move) -> void {
+auto Board::parse_move(const std::string &move) -> bool {
   // Square src;
   Square dst;
   int pad{};
@@ -179,11 +179,13 @@ auto Board::parse_move(const std::string &move) -> void {
     for (auto &i : m_pieces) {
       if (i->get_type() == 'P' && i->get_colour() == m_turn) {
         i->move(dst);
-        return;
+        return true;
       }
     }
   } else { // piece move denoted by uppercase letter R,N,B,Q,K
+    return true;
   }
+  return false;
 }
 
 auto Board::get_pieces() -> std::vector<std::unique_ptr<Piece>> & {

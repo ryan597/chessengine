@@ -10,7 +10,7 @@
  * How to use the Catch2 framework following
  * https://github.com/catchorg/Catch2/blob/devel/docs/tutorial.md#test-cases-and-sections
  *
- * TEST_CASE("Short Description", "[Optional tags]") {
+ * TEST_CASE("Short Description", "[Optional],[tags]") {
  *      Setup the test variables, these are created new for each section
  *      std::vector<int> v(5);
  *
@@ -99,19 +99,7 @@ TEST_CASE("Board print", "[board]") {
   REQUIRE(expected_output == ss.str());
 }
 
-TEST_CASE("Board move", "[board, piece]") {
-  Board chessboard{};
-  chessboard.move("d4");
-  chessboard.move("e5");
-  chessboard.move("dxe5");
-  chessboard.move("Nc6");
-  chessboard.move("Nf3");
-  chessboard.move("d4");
-  chessboard.move("d4");
-  chessboard.move("d4");
-}
-
-TEST_CASE("Print Position from FEN", "[board, fen]") {
+TEST_CASE("Print Position from FEN", "[board],[fen]") {
   std::stringstream ss;
   // redirect cout to stringstream, save old buffer
   auto old_buf = std::cout.rdbuf(ss.rdbuf());
@@ -147,5 +135,57 @@ TEST_CASE("Print Position from FEN", "[board, fen]") {
     std::cout.rdbuf(old_buf); // reset now, causes a segfault if done after the
                               // require assertion
     REQUIRE(expected3 == ss.str());
+  }
+}
+
+TEST_CASE("Parsing Moves", "[board],[piece],[move]") {
+  auto chessboard = Board{};
+  std::stringstream ss;
+  // redirect cout to stringstream, save old buffer
+  auto old_buf = std::cout.rdbuf(ss.rdbuf());
+
+  SECTION("From starting position") {
+    std::vector<std::string> moves = {
+        "d4",  "e5",   "dxe5", "Nc6", "Nf3", "Qe7", "Bf4", "Qb4+",
+        "Bd2", "Qxb2", "Nc3",  "Bb4", "Rb1", "Qa3", "Nd5", "Bxd7+"};
+    for (auto &i : moves) {
+      REQUIRE(chessboard.move(i));
+    }
+
+    chessboard.print();
+    std::cout.rdbuf(old_buf);
+
+    std::string expected = "r.b.k.nr\npppp.ppp\n..n.....\n...NP...\n........"
+                           "\nq....N..\nP.PbPPPP\n.R.QKB.R";
+    REQUIRE(expected == ss.str());
+  }
+
+  SECTION("From FEN, mate in one") {
+    std::string fen =
+        "rnbqkb1r/pp1np2p/2p1p3/2Pp3p/3P4/2N5/PP2BPPP/R1B1K1NR w KQkq - 0 10";
+    chessboard.set_from_fen(fen);
+    REQUIRE(chessboard.move("Bxh5#"));
+    chessboard.print();
+    std::cout.rdbuf(old_buf);
+
+    std::string expected = "rnbqkb.r\npp.np..p\n..p.p...\n..Pp...p\n...P....\n."
+                           ".N.....\nPP..BPPP\nR.B.K.NR";
+    REQUIRE(expected == ss.str());
+    REQUIRE(!chessboard.move("a6")); // test black cannot move after mate
+  }
+
+  SECTION("From FEN, distinguish pieces") {
+    std::string fen =
+        "rnbqk2r/pppp1ppp/4pn2/8/1bPP4/5N2/PP2PPPP/RNBQKB1R w KQkq - 2 4";
+    chessboard.set_from_fen(fen);
+    std::string move = "Nbd7";
+    chessboard.move(move);
+    chessboard.print();
+
+    std::string expected = "rnbqk..r\npppp.ppp\n....pn..\n........\n.bPP....\n."
+                           "....N..\nPP.NPPPP\nR.BQKB.R";
+
+    std::cout.rdbuf(old_buf);
+    REQUIRE(expected == ss.str());
   }
 }
