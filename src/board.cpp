@@ -1,6 +1,6 @@
 #include "board.hpp"
 
-auto make_type_ptr(int i, char col, char file, char rank)
+auto make_type_ptr(size_t i, char col, char file, char rank)
     -> std::unique_ptr<Piece> {
   switch (i) {
   case 0:
@@ -34,7 +34,7 @@ Board::Board() {
   const std::vector<char> back_rank{'R', 'N', 'B', 'K', 'Q', 'B', 'N', 'R'};
   m_pieces.reserve(32);
 
-  for (std::size_t i = 0; i < back_rank.size(); i++) {
+  for (size_t i = 0; i < back_rank.size(); i++) {
     char file = char('a' + i);
     m_pieces.emplace_back(std::make_unique<Pawn>('w', Square{file, '2'}));
     m_pieces.emplace_back(make_type_ptr(i, 'w', file, '1'));
@@ -105,7 +105,7 @@ auto Board::print_position(std::string &fen) -> void {
     if (std::find(pieces.begin(), pieces.end(), i) != std::end(pieces)) {
       asci_position += i;
     } else if (isdigit(i)) {
-      asci_position += std::string(i - '0', '.');
+      asci_position += std::string(size_t(i - '0'), '.');
     } else if (i == '/') {
       asci_position += '\n';
     } else if (i == ' ') {
@@ -125,14 +125,14 @@ auto Board::print() -> void {
     auto rank = piece->get_rank();
     // when printing we start at the top left of the board (a8), so rank=7 (0
     // index for the array) and file=0 (0 indexed for the array)
-    int current_square = 64 - rank * 8 + file - 8;
+    size_t current_square = 64 - rank * 8 + file - 8;
     board_position.at(current_square) = piece->get_type();
     if (piece->get_colour() == 'b') {
       board_position.at(current_square) += 32; // convert to lowercase
     }
   }
 
-  for (int i = 0; i < 64; i++) {
+  for (size_t i = 0; i < 64; i++) {
     std::cout << board_position.at(i);
     if ((i + 1) % 8 == 0) {
       std::cout << '\n';
@@ -167,7 +167,7 @@ auto Board::move(const std::string &notation) -> bool {
 auto Board::parse_move(const std::string &move) -> void {
   // Square src;
   Square dst;
-  int pad{};
+  size_t pad{};
   if (move.at(move.size() - 1) == '+' || move.at(move.size() - 1) == '#') {
     pad++;
   }
