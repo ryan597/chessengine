@@ -50,9 +50,9 @@ auto Piece::get_type() const -> char { return m_type; }
 
 auto Piece::get_colour() const -> char { return m_colour; }
 
-auto Piece::get_file() const -> int { return int(m_position.file - 'a'); }
+auto Piece::get_file() const -> size_t { return size_t(m_position.file - 'a'); }
 
-auto Piece::get_rank() const -> int { return int(m_position.rank - '1'); }
+auto Piece::get_rank() const -> size_t { return size_t(m_position.rank - '1'); }
 
 auto Piece::get_square() const -> Square { return m_position; }
 
