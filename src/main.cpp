@@ -1,7 +1,7 @@
 #include "board.cpp"
 #include "player.cpp"
 
-auto main(int argc, char **argv) -> int {
+auto main() -> int {
 
   Player player1{"White", 1500.0, 'w'};
   Player player2{"Black", 1600.0, 'b'};

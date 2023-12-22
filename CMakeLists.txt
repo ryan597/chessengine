@@ -9,9 +9,9 @@ set(CMAKE_CXX_STANDARD 20)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
 if(CMAKE_BUILD_TYPE MATCHES Debug)
-    if(MSVC)
+    if(CMAKE_HOST_WIN32)
         #/WX
-        add_compile_options(/W4)
+        add_compile_options(-Wno-unused-parameter)
     else()
         # Flags to be added once refactor is done
         #-Werror
