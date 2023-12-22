@@ -26,7 +26,7 @@ include(CTest)
 include(Catch)
 catch_discover_tests(tests)
 
-if( NOT MSVC AND CMAKE_BUILD_TYPE MATCHES Debug)
+if( NOT CMAKE_HOST_WIN32 AND CMAKE_BUILD_TYPE MATCHES Debug)
     setup_target_for_coverage_lcov(NAME coverage
                                     EXECUTABLE tests
                                     EXCLUDE "/usr/*" "cmake/catch2/*"

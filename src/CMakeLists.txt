@@ -10,7 +10,7 @@ add_library(nginlib STATIC
 
 add_executable(NGin ${SOURCES})
 
-if(MSVC)
+if(CMAKE_HOST_WIN32)
     set(ENABLED_WARNINGS /Wall)
 else()
     set(ENABLED_WARNING -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -Wold-style-cast -Wcast-align
