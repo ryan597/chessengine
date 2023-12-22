@@ -19,9 +19,9 @@ struct Square {
   Square(char file, char rank);
   Square(std::string position);
   struct HashFunction {
-    auto operator()(const Square &position) const -> int {
-      int rowHash = std::hash<char>()(position.file);
-      int colHash = std::hash<char>()(position.rank) << 1;
+    auto operator()(const Square &position) const -> size_t {
+      size_t rowHash = std::hash<char>()(position.file);
+      size_t colHash = std::hash<char>()(position.rank) << 1;
       return rowHash ^ colHash;
     }
   };
@@ -44,8 +44,8 @@ public:
   Piece(char type, char colour, Square position);
   auto get_type() const -> char;
   auto get_colour() const -> char;
-  auto get_file() const -> int;
-  auto get_rank() const -> int;
+  auto get_file() const -> size_t;
+  auto get_rank() const -> size_t;
   auto get_square() const -> Square;
   auto move(Square dest) -> void;
   auto virtual generate_legal_moves(Board &board)
