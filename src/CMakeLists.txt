@@ -1,9 +1,8 @@
-set(SOURCES main.cpp piece.cpp)
+set(SOURCES main.cpp board.cpp player.cpp)
+
 add_library(nginlib STATIC
-    piece.hpp
     player.hpp
     board.hpp
-    piece.cpp
     player.cpp
     board.cpp
 )
