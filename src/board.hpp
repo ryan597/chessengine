@@ -30,6 +30,18 @@ private:
   uint64_t blackPawns, blackKnights, blackBishops, blackRooks, blackQueens,
       blackKing;
   uint64_t occupied;
-  void initializeBoard();
-  uint64_t getPieceAt(int square) const;
+  uint64_t whitePieces, blackPieces;
+
+  auto getPieceAt(int square) const -> uint64_t;
+
+  auto isValidMove(int from, int to) -> bool;
+  auto validatePawnMove(int from, int to, bool isWhite) -> bool;
+  auto validateKnightMove(int from, int to) -> bool;
+  auto validateBishopMove(int from, int to) -> bool;
+  auto validateRookMove(int from, int to) -> bool;
+  auto validateQueenMove(int from, int to) -> bool;
+  auto validateKingMove(int from, int to) -> bool;
 };
+
+auto parseSquare(std::string square) -> int;
+auto mask(int position) -> uint64_t;
