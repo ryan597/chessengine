@@ -1,35 +1,35 @@
-#ifndef H_BOARD
-#define H_BOARD
+#pragma once
 
-#include <algorithm>
+#include <cstdint>
 #include <iostream>
-#include <memory>
-#include <random>
 
-#include "piece.hpp"
+const uint64_t WHITEPAWNS = 0x000000000000FF00;   // 2nd rank for white pawns
+const uint64_t WHITEKNIGHTS = 0x0000000000000042; // b1, g1
+const uint64_t WHITEBISHOPS = 0x0000000000000024; // c1, f1
+const uint64_t WHITEROOKS = 0x0000000000000081;   // a1, h1
+const uint64_t WHITEQUEENS = 0x0000000000000008;  // d1
+const uint64_t WHITEKING = 0x0000000000000010;    // e1
 
-class Piece;
+const uint64_t BLACKPAWNS = 0x00FF000000000000;   // 7th rank for black pawns
+const uint64_t BLACKKNIGHTS = 0x4200000000000000; // b8, g8
+const uint64_t BLACKBISHOPS = 0x2400000000000000; // c8, f8
+const uint64_t BLACKROOKS = 0x8100000000000000;   // a8, h8
+const uint64_t BLACKQUEENS = 0x0800000000000000;  // d8
+const uint64_t BLACKKING = 0x1000000000000000;    // e8
 
 class Board {
-private:
-  std::string m_current_fen;
-  // Vector of pieces on board
-  std::vector<std::unique_ptr<Piece>> m_pieces;
-  char m_turn;
-
 public:
   Board();
-  Board(int variant);
-  auto get_fen() -> std::string;
-  auto set_fen(const std::string &fen_string) -> bool;
-  auto static check_fen_is_valid(const std::string &fen) -> bool;
-  auto print() -> void;
-  auto print_fen() -> void;
-  auto static print_position(std::string &fen) -> void;
-  auto is_legal_move(const std::string &notation) -> bool;
-  auto move(const std::string &notation) -> bool;
-  auto parse_move(const std::string &move) -> void;
-  auto get_pieces() -> std::vector<std::unique_ptr<Piece>> &;
-};
+  void display() const;
+  bool makeMove(int from, int to);
+  void reset();
 
-#endif
+private:
+  uint64_t whitePawns, whiteKnights, whiteBishops, whiteRooks, whiteQueens,
+      whiteKing;
+  uint64_t blackPawns, blackKnights, blackBishops, blackRooks, blackQueens,
+      blackKing;
+  uint64_t occupied;
+  void initializeBoard();
+  uint64_t getPieceAt(int square) const;
+};
